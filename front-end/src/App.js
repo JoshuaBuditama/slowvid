@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { SessionWrapper } from "./state";
+import NameForm from "./components/NameForm.js";
+import Header from "./components/Header.js";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <SessionWrapper>
+      <div className="App">
+        <Header />
         <img src={logo} className="App-logo" alt="logo" />
         <h2>SlowVid</h2>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <NameForm />
+      </div>
+    </SessionWrapper>
   );
 }
 
