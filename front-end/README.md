@@ -20,6 +20,9 @@ rm package-lock.json
 npm install
 ```
 
+Then open `http://localhost:3000/` in your browser.
+Chrome has better devtools for react. 
+
 Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
@@ -35,7 +38,7 @@ They are more modern and likely easier to learn.
 
 ### 2. camelCase
 
-Prefer camelCase to kebab-case, snake_case or any other naming convention. 
+For variable, class and package names, prefer camelCase to kebab-case, snake_case or any other naming convention. 
 
 
 ### 3. prefer npm over yarn
