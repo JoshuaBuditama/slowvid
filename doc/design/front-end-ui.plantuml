@@ -1,0 +1,39 @@
+@startuml
+class App
+
+package Controller {
+    class MainController
+    class NotificationController
+    class UploadController
+
+}
+
+App o-- MainController
+App o-- NotificationController
+App o-- UploadController
+
+package Model
+{
+    class MainModel
+
+}
+
+MainController o-- MainModel
+
+package View {
+    class MainPage
+
+    class NotificationPage
+
+    class UploadPage
+
+}
+MainController o-- MainPage
+NotificationController o-- NotificationPage
+UploadController o-- UploadPage
+
+MainModel -> MainPage
+MainModel -> NotificationPage
+MainModel -> UploadPage
+
+@enduml
