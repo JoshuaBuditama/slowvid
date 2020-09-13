@@ -1,0 +1,15 @@
+name: back-end
+on:
+  push:
+jobs:
+  front-end:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm install
+        working-directory: back-end
+      - name: Build
+        run: npm run build
+        working-directory: back-end
