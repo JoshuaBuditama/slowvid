@@ -1,0 +1,55 @@
+@startuml
+class App
+
+package network {
+    class NetworkManager {
+        List<Socket> : activeClients
+    }
+}
+App o-- NetworkManager
+
+package security_privacy {
+    class OTPManager {
+        string generateOTP()
+    }
+
+    class AuthTokenManager {
+        string generateAuthToken()
+    }
+
+    class EncryptKeyManager {
+        string generateEncryptKey()
+    }
+}
+App o-- OTPManager
+App o-- AuthTokenManager
+App o-- EncryptKeyManager
+
+package user {
+    class User {
+        string id
+        List<PET> pets
+    }
+
+    class UserManager {
+        List<User> users
+    }
+}
+UserManager *-- "0..*" User
+App o-- UserManager
+
+package encounter {
+    class RiskAnalysisManager {
+        Distance : distanceThreshold
+        Duration : durationThreshold
+        void performRiskAnalysis(ClientManager clients)
+    }
+
+    class PET {
+
+    }
+}
+RiskAnalysisManager --> UserManager
+App o-- RiskAnalysisManager
+User *-- "0..*" PET
+@enduml
