@@ -1,0 +1,68 @@
+@startuml
+class App
+package controller {
+class MainController
+}
+App o-- MainController
+
+package security_privacy {
+    class AuthTokenManager {
+        Token
+    }
+    class Token {
+
+    }
+
+    class EncryptKeyManager {
+        string : id
+        string : encryptKey
+    }
+
+    class EphemeralManager
+    {
+        string generateEphemeral()
+    }
+}
+MainController o-- AuthTokenManager
+AuthTokenManager *-- Token
+MainController o-- EncryptKeyManager
+MainController o-- EphemeralManager
+
+package encounter {
+    class PET {
+
+    }
+
+    class PETManager {
+        List<PET> : uploadPETs
+        List<PET> : queryPETs
+        addPET(BlueToothContact : contact)
+    }
+}
+MainController o-- PETManager
+PETManager *-- PET
+
+package network {
+    class NetworkManager {
+        socket : serverSocket
+    }
+}
+MainController o-- NetworkManager
+
+package bluetooth {
+
+    class BlueToothContact
+    {
+        Time : encounterTime
+        Duration : encounterDuration
+    }
+
+    class BlueToothManager {
+        BlueToothContact getContact()
+    }
+}
+PETManager --> BlueToothContact
+BlueToothManager *-- BlueToothContact
+MainController o-- BlueToothManager
+
+@enduml
