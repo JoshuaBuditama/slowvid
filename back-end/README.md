@@ -1,26 +1,39 @@
 # slowvid back-end 
 
-Install the project with
+Install the project with:
 
 ```
 npm install
 ```
 
-Run the dev server with:
+Install the project with:
+
+```
+npm install
+```
+
+Build the dev server with:
+
+```
+npm run build
+```
+
+Start the dev server with:
 
 ```
 npm start
 ```
 
+Then open `http://localhost:8000/` in your browser.
+
 You can always trash the install and start fresh with:
 
 ```
 rm -rf node_modules
+rm -rf build
 rm package-lock.json
 npm install
 ```
-
-Then open `http://localhost:8000/` in your browser.
 
 
 ## Conventions
