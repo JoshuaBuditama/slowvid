@@ -6,25 +6,13 @@ Install the project with:
 npm install
 ```
 
-Install the project with:
+Run dev server with:
 
 ```
-npm install
+npm run dev
 ```
 
-Build the dev server with:
-
-```
-npm run build
-```
-
-Start the dev server with:
-
-```
-npm start
-```
-
-Then open `http://localhost:8000/` in your browser.
+Then open your browser at the address shown.
 
 You can always trash the install and start fresh with:
 
