@@ -5,12 +5,15 @@ function NameForm() {
   const [name, setName] = useState("");
   const { setMyName } = useSession();
 
-  function handleSubmit(event) {
+  function handleSubmit(event : React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setMyName(name);
+    if (setMyName != null)
+    {
+      setMyName(name);
+    }
   }
 
-  function handleChange(event) {
+  function handleChange(event : React.ChangeEvent<HTMLInputElement>) {
     console.log(event);
     setName(event.target.value);
   }

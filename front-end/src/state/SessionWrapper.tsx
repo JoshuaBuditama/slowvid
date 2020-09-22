@@ -1,12 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-const AppContext = createContext({ myName: "", setMyName: null });
+interface SessionProps {
+  myName: string | null;
+  setMyName: React.Dispatch<React.SetStateAction<string | null>> | null;
+}
 
-export const SessionWrapper = ({ children }) => {
+interface SessionWrapperProps {
+  children: React.ReactNode;
+}
+
+const AppContext = createContext({ myName: "", setMyName: null } as SessionProps);
+
+export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (props : SessionWrapperProps) => {
   const [myName, setMyName] = useState(localStorage.getItem("myName"));
 
   useEffect(() => {
-    localStorage.setItem("myName", myName);
+    localStorage.setItem("myName", myName || "");
   }, [myName]);
 
   return (
@@ -17,7 +26,7 @@ export const SessionWrapper = ({ children }) => {
           setMyName: setMyName
         }}
       >
-        {children}
+        {props.children}
       </AppContext.Provider>
     </>
   );
