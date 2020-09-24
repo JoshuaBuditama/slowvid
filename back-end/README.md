@@ -1,18 +1,53 @@
-# slowvid back-end 
+# SlowVid back-end 
 
-Install the project with:
+💻 = Required for debugging  
+▶️ = Required for running and debugging
 
-```
-npm install
-```
+## Project Setup
 
-Run dev server with:
+ 1. Install the project's dependencies with: ▶️
 
-```
-npm run dev
-```
+    ```
+    npm install
+    ```
 
-Then open your browser at the address shown.
+1. Install [MongoDB](https://www.mongodb.com/). ▶️
+
+1. Install MongoDB Compass. 💻
+
+## Run & Debug
+
+1. Start the database server: ▶️
+
+    ```
+    ./mongod.exe --dbpath <path>
+    ```
+    `<path>` can be any location.
+
+1. Start MongoDB Compass. 💻
+
+    1. Enter New Connection, connection string: `mongodb://localhost:27017` 
+    
+        ![MongoDB_Compass new connection](../doc/developer/images/MongoDB_Compass_new_connection.png)
+
+
+1. Run dev server with: ▶️
+
+    ```
+    npm run dev
+    ```
+
+1. Then open your browser at the address shown. ▶️
+
+1. View the data in MongoDB Compass. 💻  
+
+    1. Press the refresh button.
+
+    1. Select slowvid -> users
+
+        ![MongoDB_Compass user tables](../doc/developer/images/MongoDB_Compass_user_table.png)
+
+## Reset Development Environment
 
 You can always trash the install and start fresh with:
 
