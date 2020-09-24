@@ -18,13 +18,12 @@ Build the dev server with:
 nodemon server
 ```
 
-Start the dev server with:
 
-```
-npm start
-```
 
-Then open `http://localhost:8000/` in your browser.
+Then open your browser at the address shown.
+```
+localhost:5000
+```
 
 You can always trash the install and start fresh with:
 
