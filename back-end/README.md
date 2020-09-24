@@ -15,7 +15,7 @@ npm install
 Build the dev server with:
 
 ```
-npm run build
+nodemon server
 ```
 
 Start the dev server with:
