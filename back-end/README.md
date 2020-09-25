@@ -47,6 +47,8 @@
 
         ![MongoDB_Compass user tables](../doc/developer/images/MongoDB_Compass_user_table.png)
 
+1. Debugging, see the detailed instructions [SlowVid Back-End Debugging](../doc/developer/README.md)
+
 ## Reset Development Environment
 
 You can always trash the install and start fresh with:
