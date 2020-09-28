@@ -1,16 +1,31 @@
-# slowvid front-end 
+# SlowVid front-end 
 
-Install the project with
+💻 = Required for debugging  
+▶️ = Required for running and debugging
 
-```
-npm install
-```
+## Project Setup
 
-Run the dev server with:
 
-```
-npm start
-```
+ 1. Install the project's dependencies with: ▶️
+
+    ```
+    npm install
+    ```
+
+## Run & Debug
+
+1. Run the dev server with: ▶️
+
+    ```
+    npm start
+    ```
+
+1. Then open `http://localhost:3000/` in your browser. ▶️  
+Chrome has better devtools for react. 
+
+1. Debugging, see the detailed instructions [SlowVid Front-End Debugging](../doc/developer/README.md) 💻
+
+## Reset Development Environment
 
 You can always trash the install and start fresh with:
 
@@ -19,12 +34,6 @@ rm -rf node_modules
 rm package-lock.json
 npm install
 ```
-
-Then open `http://localhost:3000/` in your browser.
-Chrome has better devtools for react. 
-
-Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 
 ## Conventions
 
@@ -45,3 +54,7 @@ For variable, class and package names, prefer camelCase to kebab-case, snake_cas
 
 Yarn is another common javascript package manager. 
 We'll run into less issues if everyone uses npm.
+
+## Technologies
+
+Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
