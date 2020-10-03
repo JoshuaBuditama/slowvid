@@ -2,11 +2,15 @@ import React, { useState } from "react";
 
 function UploadForm(){
   const [counter, setCounter] = useState(0);
-
+  const [verificationToken, setVerificationToken] = useState("");
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setCounter(counter+1);
-    console.log(counter)
+  }
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setVerificationToken(event.target.value);
+    console.log(verificationToken);
   }
 
   return (
@@ -28,7 +32,7 @@ function UploadForm(){
                   className="input" 
                   type="text" 
                   placeholder="Please type the code here"
-                  value={counter}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -58,6 +62,7 @@ function UploadForm(){
                       type="submit"
                       className="button is-link"
                       value="I consent to sharing my close contacts"
+                      disabled={!verificationToken}
                     />
                   </p>
                 </div>
