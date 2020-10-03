@@ -6,20 +6,14 @@ function UploadForm(){
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log(verificationToken);
-    if(verificationToken.match(/([A-Z])/)){
-      setTokenValidity(true);
+    if((verificationToken.match(/^[A-Z]+$/) && verificationToken.length === 4)){
+      //send token to backend
     }
     else {
-      setTokenValidity(false);
+      //display error pop-up message
     }
   }
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // setVerificationToken(event.target.value);
-    // console.log(verificationToken.match(/([A-Z])/));
-    console.log(verificationToken)
-  }
-
+  
   return (
     <div>
       {/**Header section*/}
