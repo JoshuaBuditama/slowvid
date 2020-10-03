@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 
 function UploadForm(){
-  const [counter, setCounter] = useState(0);
   const [verificationToken, setVerificationToken] = useState("");
+  const [validToken, setTokenValidity] = useState(false);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setCounter(counter+1);
+    console.log(verificationToken);
+    if(verificationToken.match(/([A-Z])/)){
+      setTokenValidity(true);
+    }
+    else {
+      setTokenValidity(false);
+    }
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setVerificationToken(event.target.value);
-    console.log(verificationToken);
+    // setVerificationToken(event.target.value);
+    // console.log(verificationToken.match(/([A-Z])/));
+    console.log(verificationToken)
   }
 
   return (
@@ -31,9 +38,12 @@ function UploadForm(){
                 <input 
                   className="input" 
                   type="text" 
-                  placeholder="Please type the code here"
-                  onChange={handleChange}
+                  placeholder="Please insert the token here"
+                  onChange={e => setVerificationToken(e.target.value) }
                 />
+                {(!verificationToken.match(/^[A-Z]+$/) || verificationToken.length !== 4) && verificationToken && <p className="help is-danger">
+                  Please insert a valid token
+                </p>}
               </div>
             </div>
       
@@ -62,7 +72,7 @@ function UploadForm(){
                       type="submit"
                       className="button is-link"
                       value="I consent to sharing my close contacts"
-                      disabled={!(verificationToken.length < 5 && verificationToken.length > 0)}
+                      disabled={(!verificationToken.match(/^[A-Z]+$/) || verificationToken.length !== 4)}
                     />
                   </p>
                 </div>
