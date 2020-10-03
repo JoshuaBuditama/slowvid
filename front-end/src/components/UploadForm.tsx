@@ -62,7 +62,7 @@ function UploadForm(){
                       type="submit"
                       className="button is-link"
                       value="I consent to sharing my close contacts"
-                      disabled={!verificationToken}
+                      disabled={!(verificationToken.length < 5 && verificationToken.length > 0)}
                     />
                   </p>
                 </div>
