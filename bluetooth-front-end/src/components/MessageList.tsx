@@ -2,13 +2,17 @@ import React from "react";
 import * as ReactTable from "react-table";
 import MainController from '../controllers/MainController';
 import { IBluetoothMsgDocument } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel'
+import * as Util from '../util/Util';
 
 interface IBluetoothMsgCtrl extends IBluetoothMsgDocument {
-	selected: string;
+	selected: boolean;
 }
 
 export const MessageList: React.FunctionComponent<{}> = () => {
 	const [data, setCurrentTableData] = React.useState<IBluetoothMsgCtrl[]>([]);
+	const [signalStrength, setSignalStrength] = React.useState<string>("1.0");
+	const [validForm, setValidForm] = React.useState<boolean>(true);
+
 	const columns = React.useMemo<ReactTable.Column<IBluetoothMsgCtrl>[]>(() => [
 		{
 			Header: "Device Id",
@@ -19,15 +23,15 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 			Header: "Selected",
 			accessor: 'selected',
 			Cell: (cell: ReactTable.Cell<IBluetoothMsgCtrl>) => {
-				return(<input
+				return (<input type="checkbox"
 					onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 						event.persist();
 						setCurrentTableData(old => {
 							let n = [...old];
-							n[cell.row.index].selected = event.target.value;
+							n[cell.row.index].selected = event.target.checked;
 							return n;
 						});
-					}}/>);
+					}} />);
 			}
 		},
 	], []);
@@ -47,10 +51,20 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 
 	React.useEffect(() => {
 		MainController.getMessages().then(result => {
-			let dat = result.data.map(x => ({ ...x, selected: "aaa"} as IBluetoothMsgCtrl)); // syntax sugar to add a field to array of Objects
+			// add a field to array of Objects
+			let dat = result.data.map(x => ({ ...x, selected: false } as IBluetoothMsgCtrl));
 			setCurrentTableData(dat);
 		});
 	}, []);
+
+	const onChangeSignalStrength = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSignalStrength(event.target.value);
+		setValidForm(Util.isNumeric(event.target.value));
+	}
+
+	const onSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+		event.preventDefault();
+	}
 
 	return (
 		<>
@@ -85,6 +99,8 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 					})}
 				</tbody>
 			</table>
+			<input type="text" value={signalStrength} onChange={onChangeSignalStrength} />
+			<input type="submit" onChange={onSubmit} disabled={!validForm} />
 		</>
 	);
 }
