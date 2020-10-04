@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
-  const [validToken, setTokenValidity] = useState(false);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log(verificationToken);
