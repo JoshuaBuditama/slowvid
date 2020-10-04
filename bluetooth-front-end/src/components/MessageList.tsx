@@ -9,22 +9,26 @@ interface IBluetoothMsgCtrl extends IBluetoothMsgDocument {
 
 export const MessageList: React.FunctionComponent<{}> = () => {
 	const [data, setCurrentTableData] = React.useState<IBluetoothMsgCtrl[]>([]);
-	
-	const handleSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
-		console.log('here');
-	};
-
 	const columns = React.useMemo<ReactTable.Column<IBluetoothMsgCtrl>[]>(() => [
 		{
 			Header: "Device Id",
-			accessor: 'deviceId'
+			accessor: 'deviceId',
 		},
 		{
 			id: 'selected',
 			Header: "Selected",
 			accessor: 'selected',
-			//accessor: x => <input id={x.deviceId} value={x.selected} onChange={handleSelected} />, // type="checkbox"
-			render: (x: any) => { return 'bbbb'},
+			Cell: (cell: ReactTable.Cell<IBluetoothMsgCtrl>) => {
+				return(<input
+					onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+						event.persist();
+						setCurrentTableData(old => {
+							let n = [...old];
+							n[cell.row.index].selected = event.target.value;
+							return n;
+						});
+					}}/>);
+			}
 		},
 	], []);
 
@@ -32,8 +36,8 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 		getTableProps,
 		getTableBodyProps,
 		headerGroups,
-		prepareRow,
 		rows,
+		prepareRow,
 	} = ReactTable.useTable<IBluetoothMsgCtrl>(
 		{
 			columns,
