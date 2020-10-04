@@ -17,13 +17,34 @@
             "type": "pwa-node",
             "cwd": "${workspaceFolder}/back-end"
         },
+		{
+            "name": "Launch Bluetooth Server",
+            "request": "launch",
+            "runtimeArgs": [
+                "run", "dev"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
+            "cwd": "${workspaceFolder}/bluetooth-server"
+        },
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome Front-End",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/front-end/src",
-            "preLaunchTask": "start-back-end"
+            "preLaunchTask": "start-front-end"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome Bluetooth Front-End",
+            "url": "http://localhost:8002",
+            "webRoot": "${workspaceFolder}/bluetooth-front-end/src",
+            "preLaunchTask": "start-bluetooth-front-end"
         }
     ]
 }
