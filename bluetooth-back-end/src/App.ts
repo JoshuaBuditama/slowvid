@@ -4,12 +4,11 @@ import bodyParser from 'body-parser';
 import { router, iorouter } from './routes/Router';
 import ioserver from 'socket.io';
 import * as http from 'http';
-import {BluetoothMsgModel } from './model/BluetoothMsgModel';
+import { BluetoothMsgModel } from './model/BluetoothMsgModel';
 import cors from 'cors';
 
 let db = new Database()
 db.connect("mongodb://localhost:27017/bts");
-BluetoothMsgModel.create({ deviceId: "TEST ID"});
 
 const app: express.Application = express();
 
