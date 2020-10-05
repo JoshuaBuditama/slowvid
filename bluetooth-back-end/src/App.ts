@@ -2,9 +2,8 @@ import express from 'express';
 import { Database } from '../../back-end/src/Model/Database';
 import bodyParser from 'body-parser';
 import { router, iorouter } from './routes/Router';
-import ioserver from 'socket.io';
+import * as SocketServer from './controllers/SocketServer';
 import * as http from 'http';
-import { BluetoothMsgModel } from './model/BluetoothMsgModel';
 import cors from 'cors';
 
 let db = new Database()
@@ -13,7 +12,7 @@ db.connect("mongodb://localhost:27017/bts");
 const app: express.Application = express();
 
 let httpserver = http.createServer(app);
-let io = ioserver(httpserver);
+SocketServer.init(httpserver);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,10 +23,10 @@ app.get('/', (req, res) => {
 });
 app.use('/api', router);
 
-io.on('connection', iorouter);
+SocketServer.get().on('connection', iorouter);
 
 const apiPort = 3002;
-app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
+httpserver.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
 
 process.on('exit', function () {
 	db.disconnect();
