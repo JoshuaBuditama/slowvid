@@ -1,11 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 export const BluetoothMsgSchema = new mongoose.Schema({
-    deviceId: String,
+	deviceId: String,
 });
 
 export interface IBluetoothMsg {
-    deviceId: string;
+	deviceId: string;
 }
 
 export interface IBluetoothMsgDocument extends IBluetoothMsg, mongoose.Document { };
