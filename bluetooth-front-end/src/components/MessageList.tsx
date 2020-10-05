@@ -2,7 +2,6 @@ import React from "react";
 import * as ReactTable from "react-table";
 import MainController from '../controllers/MainController';
 import { IBluetoothMsgDocument } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel';
-import { IBluetoothProximityDocument, IBluetoothProximity } from '../../../bluetooth-back-end/src/model/BluetoothProximityModel';
 import * as Util from '../util/Util';
 
 interface IBluetoothMsgCtrl extends IBluetoothMsgDocument {
@@ -11,13 +10,17 @@ interface IBluetoothMsgCtrl extends IBluetoothMsgDocument {
 
 export const MessageList: React.FunctionComponent<{}> = () => {
 	const [data, setCurrentTableData] = React.useState<IBluetoothMsgCtrl[]>([]);
-	const [signalStrength, setSignalStrength] = React.useState<string>("1.1");
+	const [signalStrength, setSignalStrength] = React.useState<string>("1.0");
 	const [validForm, setValidForm] = React.useState<boolean>(true);
 
 	const columns = React.useMemo<ReactTable.Column<IBluetoothMsgCtrl>[]>(() => [
 		{
 			Header: "Device Id",
 			accessor: 'deviceId',
+		},
+		{
+			Header: "Latest Msg",
+			accessor: 'latestMsg',
 		},
 		{
 			id: 'selected',
