@@ -7,7 +7,7 @@ import * as http from 'http';
 import cors from 'cors';
 
 let db = new Database()
-db.connect("mongodb://localhost:27017/bts");
+db.connect("mongodb://localhost:27017/btbe");
 
 const app: express.Application = express();
 
