@@ -1,16 +1,17 @@
 import React from "react";
 import * as ReactTable from "react-table";
 import MainController from '../controllers/MainController';
-import { IBluetoothMsgDocument } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel'
+import { IBluetoothMsgDocument } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel';
+import { IBluetoothProximityDocument, IBluetoothProximity } from '../../../bluetooth-back-end/src/model/BluetoothProximityModel';
 import * as Util from '../util/Util';
 
 interface IBluetoothMsgCtrl extends IBluetoothMsgDocument {
 	selected: boolean;
-}
+};
 
 export const MessageList: React.FunctionComponent<{}> = () => {
 	const [data, setCurrentTableData] = React.useState<IBluetoothMsgCtrl[]>([]);
-	const [signalStrength, setSignalStrength] = React.useState<string>("1.0");
+	const [signalStrength, setSignalStrength] = React.useState<string>("1.1");
 	const [validForm, setValidForm] = React.useState<boolean>(true);
 
 	const columns = React.useMemo<ReactTable.Column<IBluetoothMsgCtrl>[]>(() => [
@@ -62,8 +63,21 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 		setValidForm(Util.isNumeric(event.target.value));
 	}
 
-	const onSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+	const onSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
 		event.preventDefault();
+		setValidForm(false);
+		for (let i = 0; i < data.length - 1; i++) {
+			for (let j = i + 1; j < data.length; j++) {
+				if (data[i].selected && data[j].selected) {
+					await MainController.addProximity({
+						first: data[i] as IBluetoothMsgDocument,
+						second: data[j] as IBluetoothMsgDocument,
+						signalStrenth: parseFloat(signalStrength),
+					});
+				}
+			}
+		}
+		setValidForm(true);
 	}
 
 	return (
@@ -100,7 +114,7 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 				</tbody>
 			</table>
 			<input type="text" value={signalStrength} onChange={onChangeSignalStrength} />
-			<input type="submit" onChange={onSubmit} disabled={!validForm} />
+			<input type="submit" onClick={onSubmit} disabled={!validForm} />
 		</>
 	);
 }
