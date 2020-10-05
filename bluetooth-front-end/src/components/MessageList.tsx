@@ -51,12 +51,15 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 	);
 
 	React.useEffect(() => {
-		MainController.getMessages().then(result => {
-			// add a field to array of Objects
-			let dat = result.data.map(x => ({ ...x, selected: false } as IBluetoothMsgCtrl));
-			setCurrentTableData(dat);
-		});
+		loadTableData();
 	}, []);
+
+	const loadTableData = async () => {
+		const result = await MainController.getMessages();
+		// add a field to array of Objects
+		const dat = result.data.map(x => ({ ...x, selected: false } as IBluetoothMsgCtrl));
+		setCurrentTableData(dat);
+	}
 
 	const onChangeSignalStrength = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSignalStrength(event.target.value);
@@ -77,6 +80,13 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 				}
 			}
 		}
+		setValidForm(true);
+	}
+
+	const onDeleteAll = async (event: React.FormEvent<HTMLInputElement>) => {
+		setValidForm(false);
+		await MainController.deleteMessages();
+		await loadTableData();
 		setValidForm(true);
 	}
 
@@ -113,8 +123,9 @@ export const MessageList: React.FunctionComponent<{}> = () => {
 					})}
 				</tbody>
 			</table>
-			<input type="text" value={signalStrength} onChange={onChangeSignalStrength} />
+			<div>Signal Strength: </div><input type="text" value={signalStrength} onChange={onChangeSignalStrength} />
 			<input type="submit" onClick={onSubmit} disabled={!validForm} />
+			<input value="Delete all" type="button" onClick={onDeleteAll} disabled={!validForm} />
 		</>
 	);
 }
