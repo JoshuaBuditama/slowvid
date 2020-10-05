@@ -1,0 +1,20 @@
+@startuml
+== Mock Setup ==
+"SlowVid\nFront-end A" -> "Mock Bluetooth\nServer": Subscribe to notifications
+"Mock Bluetooth\nServer" <- "SlowVid\nFront-end B\n(or simulator)": Subscribe to notifications
+
+== Operation ==
+
+"SlowVid\nFront-end A" -> "Mock Bluetooth\nServer": Broadcast EphID
+"SlowVid\nFront-end B\n(or simulator)" -> "Mock Bluetooth\nServer": Broadcast EphID
+note over "Mock Bluetooth\nServer"
+Developer sets proximity setting
+on Mock Bluetooth Server
+to indicate A & B are now
+close to each other
+end note 
+"SlowVid\nFront-end A" -> "Mock Bluetooth\nServer": Broadcast EphID
+"Mock Bluetooth\nServer" -> "SlowVid\nFront-end B\n(or simulator)": Notify of A's EphID
+"SlowVid\nFront-end B\n(or simulator)" -> "Mock Bluetooth\nServer": Broadcast EphID
+"Mock Bluetooth\nServer" -> "SlowVid\nFront-end A": Notify of B's EphID
+@enduml
