@@ -1,6 +1,7 @@
 import express from 'express';
 import ioserver from 'socket.io';
 import MainController from '../controllers/MainController';
+import { IBluetoothMsg } from '../model/BluetoothMsgModel'
 
 export const router = express.Router();
 router.get('/messages', MainController.getMessages);
@@ -10,5 +11,11 @@ router.post('/addproximity', MainController.addProximity);
 router.get('/deleteproximities', MainController.deleteProximities);
 
 export const iorouter = (socket: ioserver.Socket) => {
-	// socket.on('message', MainController.addMessage);
+	socket.on('broadcast', async (str: string) => {
+		const msg: IBluetoothMsg = {
+			deviceId: socket.id,
+			latestMsg: str,
+		};
+		await MainController.addorUpdateMessage(msg);
+	});
 };
