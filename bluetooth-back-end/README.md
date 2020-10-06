@@ -33,7 +33,7 @@ is set via the developer-use application 'Bluetooth Front-end'.
 
     1. Enter New Connection, connection string: `mongodb://localhost:27017` 
     
-        ![MongoDB_Compass new connection](../doc/developer/images/MongoDB_Compass_new_connection.png)
+        ![MongoDB_Compass new connection](../doc/developer/images/MongoDB_Compass_new_connection_btbe.png)
 
 
 1. Run dev server with: ▶️
