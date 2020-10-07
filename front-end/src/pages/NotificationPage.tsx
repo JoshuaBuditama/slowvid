@@ -1,8 +1,11 @@
 import React from "react";
+import Notify from "../components/Notifications";
 import { RouteComponentProps } from "@reach/router";
 
-let Page = (props: RouteComponentProps) => (
-  <div>Notification page goes here</div>
-);
+function notification (props: RouteComponentProps)
+{
+  return <Notify />
+}
 
-export default Page;
+
+export default notification;
