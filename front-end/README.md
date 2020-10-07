@@ -20,7 +20,7 @@
     npm start
     ```
 
-1. Then open `http://localhost:3000/` in your browser. ▶️  
+1. Then open `http://localhost:8001/` in your browser. ▶️  
 Chrome has better devtools for react. 
 
 1. Debugging, see the detailed instructions [SlowVid Front-End Debugging](../doc/developer/README.md) 💻
