@@ -21,7 +21,11 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
   const [mockServices, ] = useState(io(Conf.mockServicesAddr));
 
   mockServices.on('connect', () => {
-	mockServices.emit('broadcast', EphemeralMgr.genId());
+    const ephemeralId = EphemeralMgr.genId();
+    mockServices.emit('broadcast', ephemeralId);
+    setInterval(() => {
+      mockServices.emit('broadcast', ephemeralId);
+    }, Conf.bluetoothBroadcastPeriodMilliseconds);
   });
 
   useEffect(() => {
