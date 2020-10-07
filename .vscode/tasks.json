@@ -9,17 +9,36 @@
 			"problemMatcher": {
 				"owner": "npm",
 				"background": {
-                    "activeOnStart": true,
-                     "beginsPattern": "^.*slowvid-back-end.*",
-                     "endsPattern": "^.*Note that the development build is not optimized.*"
+					"activeOnStart": true,
+					"beginsPattern": "^.*slowvid-back-end.*",
+					"endsPattern": "^.*Note that the development build is not optimized.*"
 				},
-                "pattern": {
-                    "regexp": "",
-                }
+				"pattern": {
+					"regexp": "",
+				}
 			},
-			"label": "start-back-end",
+			"label": "start-front-end",
+			"isBackground": true
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "bluetooth-front-end/",
+			"group": "test",
+			"problemMatcher": {
+				"owner": "npm",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^.*slowvid-back-end.*",
+					"endsPattern": "^.*Note that the development build is not optimized.*"
+				},
+				"pattern": {
+					"regexp": "",
+				}
+			},
+			"label": "start-bluetooth-front-end",
 			"isBackground": true
 		}
+
 	]
 }
-
