@@ -1,6 +1,7 @@
 import express from 'express';
 import { BluetoothMsgModel, IBluetoothMsgDocument, IBluetoothMsg, IBluetoothMsgWithSignalStrength } from '../model/BluetoothMsgModel';
 import { BluetoothProximityModel, IBluetoothProximityDocument, IBluetoothProximity } from '../model/BluetoothProximityModel';
+import { ISMS, SMSDeviceModel } from '../model/SMSModel';
 import * as SocketServer from './SocketServer';
 
 export const getMessages = async (req: express.Request, res: express.Response<IBluetoothMsgDocument[]>) => {
@@ -135,13 +136,41 @@ export const deleteProximities = async (req: express.Request, res: express.Respo
 	}
 }
 
+export const addSMSDevice = async (deviceId: string, phoneNumber: string) => {
+	try {
+		const dev = new SMSDeviceModel({
+			deviceId: deviceId,
+			phoneNumber: phoneNumber,
+		});
+		if (dev) {
+			await dev.save();
+		}
+	} catch (err: any) {
+		console.log(err);
+	}
+};
+
+export const sendSMS = async (sms: ISMS) => {
+	try {
+		const devices = await SMSDeviceModel.find({ phoneNumber: sms.phoneNumber }).exec();
+		for (let device of devices) {
+			SocketServer.get().to(device.deviceId).emit('sms', sms.message);
+		}
+	} catch (err: any) {
+		console.log(err);
+	}
+};
+
+
 const MainController = {
 	getMessages,
 	addorUpdateMessage,
 	deleteMessages,
 	getProximities,
 	addProximity,
-	deleteProximities
+	deleteProximities,
+	addSMSDevice,
+	sendSMS,
 };
 
 export default MainController;
