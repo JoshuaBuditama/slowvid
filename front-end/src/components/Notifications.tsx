@@ -15,15 +15,10 @@ function Positive()
     );
 
 }
- 
-function Negative()
-{
-    return ( <div>You good fam</div>);
-}
 
 function Notify()
 {
-    return (  <Positive/>
+    return ( <Positive/>
         );
 }
 
