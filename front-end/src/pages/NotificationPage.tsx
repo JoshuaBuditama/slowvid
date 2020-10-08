@@ -6,6 +6,4 @@ function notification (props: RouteComponentProps)
 {
   return <Notify />
 }
-
-
 export default notification;
