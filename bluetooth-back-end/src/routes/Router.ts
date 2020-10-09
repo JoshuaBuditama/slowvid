@@ -1,7 +1,8 @@
 import express from 'express';
 import ioserver from 'socket.io';
 import MainController from '../controllers/MainController';
-import { IBluetoothMsg } from '../model/BluetoothMsgModel'
+import { IBluetoothMsg } from '../model/BluetoothMsgModel';
+import { ISMS } from '../model/SMSModel';
 
 export const router = express.Router();
 router.get('/messages', MainController.getMessages);
@@ -17,5 +18,11 @@ export const iorouter = (socket: ioserver.Socket) => {
 			latestMsg: str,
 		};
 		await MainController.addorUpdateMessage(msg);
+	});
+	socket.on('smsregister', async (phoneNumber: string) => {
+		await MainController.addSMSDevice(socket.id, phoneNumber);
+	});
+	socket.on('sms', async (sms: ISMS) => {
+		await MainController.sendSMS(sms);
 	});
 };
