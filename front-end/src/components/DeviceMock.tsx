@@ -44,6 +44,9 @@ let Smartphone = styled.div`
 
 let SmartphoneContent = styled.div`
   background: white;
+  overflow: auto;
+  width: 328px;
+  height: 520px;
 `;
 
 export interface LayoutProps {
