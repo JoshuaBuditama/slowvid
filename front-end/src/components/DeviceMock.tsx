@@ -47,6 +47,7 @@ let SmartphoneContent = styled.div`
   overflow: auto;
   width: 328px;
   height: 520px;
+  ol {margin:0 0 0 10px;}
 `;
 
 export interface LayoutProps {
