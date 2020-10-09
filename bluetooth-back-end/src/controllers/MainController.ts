@@ -18,24 +18,22 @@ export const addorUpdateMessage = async (req: IBluetoothMsg) => {
 		return;
 	}
 	try {
-		let msg: IBluetoothMsgDocument | undefined;
 		const res = await BluetoothMsgModel.find({ deviceId: req.deviceId }).exec();
 		if (res.length > 0) {
 			for (let x of res) {
 				if (x.latestMsg != req.latestMsg) {
 					x.latestMsg = req.latestMsg;
-					msg = await x.save();
+					await x.save();
 				}
 			}
+			broadcastMessage(res[0]);
 		}
 		else {
-			msg = new BluetoothMsgModel(req);
+			let msg = new BluetoothMsgModel(req);
 			if (!msg) {
 				return;
 			}
 			msg = await msg.save();
-		}
-		if (msg !== undefined) {
 			broadcastMessage(msg);
 		}
 	} catch (err: any) {
