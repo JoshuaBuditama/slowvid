@@ -38,13 +38,13 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
   mockServices.on('broadcast', (data: IBluetoothMsgWithSignalStrength) => {
     let foreignEmphIds : string[] = JSON.parse(data.latestMsg);
     if (keyPairUpload && foreignEmphIds.length > 1) {
-      const ecounterToken = EphemeralMgr.genEncounterToken(keyPairUpload, foreignEmphIds[0]);
+      const ecounterToken = EphemeralMgr.genEncounterToken(keyPairUpload, foreignEmphIds[1]);
       const uploadTableRaw = localStorage.getItem('uploadTable');
       const uploadTable = LocalStorage.updateUploadTable(uploadTableRaw, ecounterToken, data.signalStrenth);
       localStorage.setItem('uploadTable', JSON.stringify(uploadTable));
     }
     if (keyPairQuery && foreignEmphIds.length > 1) {
-      const ecounterToken = EphemeralMgr.genEncounterToken(keyPairQuery, foreignEmphIds[1]);
+      const ecounterToken = EphemeralMgr.genEncounterToken(keyPairQuery, foreignEmphIds[0]);
       const queryTableRaw = localStorage.getItem('queryTable');
       const queryTable = LocalStorage.updateQueryTable(queryTableRaw, ecounterToken);
       localStorage.setItem('queryTable', JSON.stringify(queryTable));
