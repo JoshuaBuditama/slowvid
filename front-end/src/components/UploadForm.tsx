@@ -2,25 +2,35 @@ import React, { useState } from "react";
 
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
+
+  function validToken() {
+    const validTokenCombination = /^[A-Z]+$/;
+    const validTokenLength = 4;
+    if(verificationToken.match(validTokenCombination) && verificationToken.length === validTokenLength)
+    {
+      return true;
+    }
+    return false;
+  }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(verificationToken);
-    if((verificationToken.match(/^[A-Z]+$/) && verificationToken.length === 4)){
+    if(validToken()){
       //send token to backend
     }
     else {
       //display error pop-up message
     }
   }
-  
+
   return (
     <div>
       {/**Header section*/}
       <section className="section is-medium has-text-centered">
         <div className="container">
-          <h1 className="title">Sharing my close contacts with healthcare professional</h1>
+          <h1 className="title">Sharing my close contacts with health care professional</h1>
           <h2 className="subtitle">
-            Please enter the healthcare code provided to you by the healthcare professional
+            Please enter the health care code provided to you by the health care professional
           </h2>
           
           {/*Upload Form*/}
@@ -34,7 +44,7 @@ function UploadForm(){
                   placeholder="Please insert the token here"
                   onChange={e => setVerificationToken(e.target.value) }
                 />
-                {(!verificationToken.match(/^[A-Z]+$/) || verificationToken.length !== 4) && verificationToken && <p className="help is-danger">
+                {!validToken() && verificationToken && <p className="help is-danger">
                   Please insert a valid token
                 </p>}
               </div>
@@ -65,7 +75,7 @@ function UploadForm(){
                       type="submit"
                       className="button is-link"
                       value="I consent to sharing my close contacts"
-                      disabled={(!verificationToken.match(/^[A-Z]+$/) || verificationToken.length !== 4)}
+                      disabled={!validToken()}
                     />
                   </p>
                 </div>
