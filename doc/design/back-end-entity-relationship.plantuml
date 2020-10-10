@@ -1,0 +1,35 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "QueryTable" {
+  *_id : Hash <<generated>>
+  --
+  *encounterToken : String
+  *user : ObjectId <<FK>>
+}
+
+entity "UploadTable" {
+  *_id : Hash <<generated>>
+  --
+  *timeOfEncounter: Number
+  *duration: Number
+  *signalStrength: Number
+  *user : ObjectId <<FK>>
+}
+
+entity "User" {
+  *_id : Hash <<generated>>
+  --
+  *deviceId : String
+  *closeContactFlag : Boolean
+}
+
+"QueryTable" -- "User"
+"UploadTable" -- "User"
+
+@enduml
