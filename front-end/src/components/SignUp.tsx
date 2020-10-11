@@ -19,10 +19,11 @@ function SignUp(){
         // if a valid phone num, send to back end
         console.log(checkNum());
         if(checkNum()){
-            //send to back end to send SMS
+            //send to back end to send SMS and authentication
+           setPhoneNum(phoneNum);
         }
         else{
-            //error handle
+            //error handle, possibly create alert
         }
         
     }
