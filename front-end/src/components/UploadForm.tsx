@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import PopUpElement from "../components/PopUpElement";
 
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
-
+  const [PopUpElementType, setPopUpElementType] = useState("");
   function validToken() {
     const validTokenCombination = /^[A-Z]+$/;
     const validTokenLength = 4;
@@ -17,10 +18,17 @@ function UploadForm(){
     event.preventDefault();
     if(validToken()){
       //send token to backend
+      //if successful, display success message
+      setPopUpElementType("upload-success");
     }
     else {
       //display error pop-up message
     }
+  }
+
+  function handlePopUpClick(){
+    setPopUpElementType("");
+    console.log("HEYOHEYO");
   }
 
   return (
@@ -32,7 +40,6 @@ function UploadForm(){
           <h2 className="subtitle">
             Please enter the health care code provided to you by the health care professional
           </h2>
-          
           {/*Upload Form*/}
           <form onSubmit={handleSubmit}>
             {/*Input column*/}
@@ -83,6 +90,9 @@ function UploadForm(){
             </div>
           </form>
         </div>
+      </section>
+      <section className="section">      
+        <PopUpElement type={PopUpElementType} onPopUpClick={handlePopUpClick}></PopUpElement>
       </section>
     </div>
   );
