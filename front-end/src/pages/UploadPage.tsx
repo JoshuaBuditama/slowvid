@@ -1,6 +1,9 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
+import UploadForm from "../components/UploadForm";
 
-let Page = (props: RouteComponentProps) => <div>Upload page goes here</div>;
+function UploadPage(props: RouteComponentProps) {
+  return <UploadForm />;
+}
 
-export default Page;
+export default UploadPage;
