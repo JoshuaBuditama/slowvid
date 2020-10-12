@@ -2,7 +2,7 @@ name: front-end
 on:
   push:
 jobs:
-  front-end:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
