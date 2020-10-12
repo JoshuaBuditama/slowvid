@@ -111,14 +111,8 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'rgba(160, 160, 160, 0.2)',
-                height: '100vh'
-            }}>
+            <div>
+                <h1 className="title" style={{ padding: 20 }}>Sign In</h1>
                 <Paper elevation={4} style={{ padding: 20, width: 300, marginBottom: 60 }}>
                     {
                         !this.state.otpShow ?
@@ -208,8 +202,7 @@ export default class App extends React.Component {
                         }
 
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
-                            <a href='#' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
-                            <a href='#' style={{ textDecoration: 'none', fontSize: 14, marginLeft: 10 }}>User agreement</a>
+                            <a href='TOS' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
                         </div>
                     </div>
                 </Paper>
