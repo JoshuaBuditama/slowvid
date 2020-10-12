@@ -207,10 +207,9 @@ export default class App extends React.Component {
                                 null
                         }
 
-                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
+                        {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
                             <a href='#' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
-                            <a href='#' style={{ textDecoration: 'none', fontSize: 14, marginLeft: 10 }}>User agreement</a>
-                        </div>
+                        </div> */}
                     </div>
                 </Paper>
             </div>
