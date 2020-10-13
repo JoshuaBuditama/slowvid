@@ -19,10 +19,11 @@ function NameForm() {
 
   return (
     <div
-      style={{ padding: "10px", border: "1px solid white", marginTop: "20px", backgroundColor:"green" }}
+      style={{ padding: "10px", border: "1px solid white",  backgroundColor:"forestgreen" ,alignItems: 'center',
+      justifyContent: 'center', height:900,}}
     >
       <div
-        style={{  marginBottom: "100px" }}
+        style={{ marginTop: "20px",marginBottom: "100px" }}
       >
         <p>
           You are in safe!

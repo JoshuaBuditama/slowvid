@@ -42,10 +42,10 @@ export default class App extends React.Component {
                 channel: 'sms'
             }
         })
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
 
-            
+
     };
 
     _checkResponse = (val) => {
@@ -64,13 +64,13 @@ export default class App extends React.Component {
             }
         })
             .then(data =>
-                // valid = true
-                {
-                    if(data.valid === true)
-                        alert("This phone number was successfully verified, moving to the home page.");
-                    else
-                        alert("Oops! Wrong OTP!");
-                }// this.tohome()
+            // valid = true
+            {
+                if (data.valid === true)
+                    alert("This phone number was successfully verified, moving to the home page.");
+                else
+                    alert("Oops! Wrong OTP!");
+            }// this.tohome()
             )
             .catch(err =>
                 // valid = false
@@ -127,14 +127,9 @@ export default class App extends React.Component {
     render() {
         return (
             <div
-            // style={{
-            //     flex: 1,
-            //     display: 'flex',
-            //     alignItems: 'center',
-            //     justifyContent: 'center',
-            //     backgroundColor: 'rgba(160, 160, 160, 0.2)',
-            //     height: '100vh'
-            // }}
+                style={{
+                    padding: 15
+                }}
             >
                 <h1 className="title" style={{ margin: 20 }}>Sign In</h1>
                 <Paper elevation={4} style={{ padding: 20, width: 300, marginBottom: 60 }}>
