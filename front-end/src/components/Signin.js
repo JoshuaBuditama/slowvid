@@ -11,7 +11,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 
 import Otp from './Otp.js';
-
+import history from './history';
 
 function isNumeric(n) {
     return !isNaN(parseInt(n)) && isFinite(n);
@@ -34,7 +34,7 @@ export default class App extends React.Component {
         this.countDown = this.countDown.bind(this);
     }
     _getCode = async () => {
-        this.setState({ seconds: 30 });
+        this.setState({ seconds: 30, time: this.secondsToTime(30) });
         const e = this.state.code + this.state.pno;
         await axios.get("http://localhost:8000/verify/getcode", {
             params: {
@@ -42,10 +42,18 @@ export default class App extends React.Component {
                 channel: 'sms'
             }
         })
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+
+            
     };
 
+    _checkResponse = (val) => {
+        if (val === "NO") {
+            alert("1.Incorrect phone number")
+        }
+
+    }
 
     _verifyCode = async () => {
         const e = this.state.code + this.state.pno;
@@ -56,15 +64,22 @@ export default class App extends React.Component {
             }
         })
             .then(data =>
-                // valid = false
-                alert(data)
+                // valid = true
+                {
+                    if(data.valid === true)
+                        alert("This phone number was successfully verified, moving to the home page.");
+                    else
+                        alert("Oops! Wrong OTP!");
+                }// this.tohome()
             )
             .catch(err =>
                 // valid = false
-                alert(err)
+                alert("Oops! Wrong OTP.")
             );
     }
-
+    tohome = () => {
+        history.push('/');
+    }
 
 
     secondsToTime(secs) {
@@ -111,19 +126,22 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'rgba(160, 160, 160, 0.2)',
-                height: '100vh'
-            }}>
+            <div
+            // style={{
+            //     flex: 1,
+            //     display: 'flex',
+            //     alignItems: 'center',
+            //     justifyContent: 'center',
+            //     backgroundColor: 'rgba(160, 160, 160, 0.2)',
+            //     height: '100vh'
+            // }}
+            >
+                <h1 className="title" style={{ margin: 20 }}>Sign In</h1>
                 <Paper elevation={4} style={{ padding: 20, width: 300, marginBottom: 60 }}>
                     {
                         !this.state.otpShow ?
                             <h3 style={{ marginLeft: 10, color: '#9f9f9f' }}>Verification</h3> :
-                            <IconButton onClick={() => { this.setState({ otpShow: false, otp: '' }); }} size="small">
+                            <IconButton onClick={() => { this.setState({ otpShow: false, otp: '', seconds: 30, time: this.secondsToTime(30) }); }} size="small">
                                 <ArrowBackIcon />
                             </IconButton>
                     }
@@ -141,10 +159,13 @@ export default class App extends React.Component {
                         {
                             !this.state.otpShow ?
                                 <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', justifyContent: 'space-around' }}>
+
                                     <div style={{ alignItems: 'flex-end', justifyContent: 'center', display: 'flex', marginRight: 10, width: 60 }}>
-                                        <TextField placeholder="eg. +61" id="code" label="Code" color="secondary" value={this.state.code} onChange={e => {
-                                            this.setState({ code: e.target.value });
-                                        }} />
+                                        <TextField placeholder="eg. +61" id="code" label="Code" color="secondary" value={this.state.code}
+                                            inputProps={{ maxLength: 4 }}
+                                            onChange={e => {
+                                                this.setState({ code: e.target.value });
+                                            }} />
                                     </div>
                                     <div>
                                         <TextField placeholder="eg. 0412 345 678" id="phone" label="Phone" color="secondary" value={this.state.pno}
@@ -173,7 +194,7 @@ export default class App extends React.Component {
                                         onClick={() => this._getCode()}>
                                         Resend
                                     </Button>
-                                    <div>
+                                    <div style={{ marginLeft: 5 }}>
                                         {this.state.time.s}s
                                     </div>
                                 </div> :
@@ -191,6 +212,7 @@ export default class App extends React.Component {
                                 }}
                                 onClick={() => {
                                     if (this.state.otpShow) {
+                                        // this.startTimer();
                                         this._verifyCode();
                                     } else {
                                         this._getCode();
@@ -207,9 +229,8 @@ export default class App extends React.Component {
                                 null
                         }
 
-                        {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
-                            <a href='#' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
-                        </div> */}
+
+
                     </div>
                 </Paper>
             </div>

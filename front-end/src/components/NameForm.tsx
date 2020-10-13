@@ -19,8 +19,15 @@ function NameForm() {
 
   return (
     <div
-      style={{ padding: "10px", border: "1px solid white", marginTop: "20px" }}
+      style={{ padding: "10px", border: "1px solid white", marginTop: "20px", backgroundColor:"green" }}
     >
+      <div
+        style={{  marginBottom: "100px" }}
+      >
+        <p>
+          You are in safe!
+      </p>
+      </div>
       <p>
         This is a demo form that will store your name in app state and your
         browser's local storage.

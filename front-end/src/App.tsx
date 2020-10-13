@@ -5,6 +5,7 @@ import MainPage from "./pages/MainPage";
 import NotificationPage from "./pages/NotificationPage";
 import SignInPage from "./pages/SignInPage";
 import UploadPage from "./pages/UploadPage";
+import history from './components/history';
 
 function App() {
   const { myName } = useSession();
@@ -33,7 +34,7 @@ function App() {
         </div>
       </nav>
       <div className="container">
-        <Router>
+        <Router history={history}>
           <MainPage path="/" />
           <NotificationPage path="notifications" />
           <SignInPage path="sign-in" />

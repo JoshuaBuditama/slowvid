@@ -14,14 +14,14 @@ exports.getCode = async (req, res) => {
             channel: req.query.channel
         })
         .then(data => {
-            console.log("res of getCode:");
-            console.log(data);
-            res.status(200).send(data);
+            console.log("res of getCode:"),
+            console.log(data),
+            res.status(200).send(data)
         })
 };
  
  
-exports.verifyCode = async (req, res) => {
+exports.verifyCode = async (req, res,err) => {
     console.log("******** verifyCode");
     console.log(req.query.phonenumber);
     console.log(req.query.code);
@@ -34,7 +34,6 @@ exports.verifyCode = async (req, res) => {
             code: req.query.code
         })
         .then(data => {
-            console.log("res of verifyCode:");
             console.log(data);
             res.status(200).send(data);
         });
