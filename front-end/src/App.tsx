@@ -5,6 +5,8 @@ import MainPage from "./pages/MainPage";
 import NotificationPage from "./pages/NotificationPage";
 import SignInPage from "./pages/SignInPage";
 import UploadPage from "./pages/UploadPage";
+import TermOfServicePage from "./pages/TermsOfServicePage";
+
 import history from './components/history';
 import DeviceMock from "./components/DeviceMock";
 
@@ -41,6 +43,7 @@ function App() {
             <NotificationPage path="notifications" />
             <SignInPage path="sign-in" />
             <UploadPage path="upload" />
+            <TermOfServicePage path="TOS"/>
           </Router>
         </DeviceMock>
       </div>

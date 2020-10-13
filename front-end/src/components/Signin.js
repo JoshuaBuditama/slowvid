@@ -224,8 +224,9 @@ export default class App extends React.Component {
                                 null
                         }
 
-
-
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
+                            <a href='TOS' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
+                        </div>
                     </div>
                 </Paper>
             </div>
