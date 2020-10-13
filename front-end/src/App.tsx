@@ -6,6 +6,7 @@ import NotificationPage from "./pages/NotificationPage";
 import SignInPage from "./pages/SignInPage";
 import UploadPage from "./pages/UploadPage";
 import history from './components/history';
+import DeviceMock from "./components/DeviceMock";
 
 function App() {
   const { myName } = useSession();
@@ -33,13 +34,15 @@ function App() {
           </div>
         </div>
       </nav>
-      <div className="container">
-        <Router history={history}>
-          <MainPage path="/" />
-          <NotificationPage path="notifications" />
-          <SignInPage path="sign-in" />
-          <UploadPage path="upload" />
-        </Router>
+      <div>
+        <DeviceMock>
+          <Router history={history}>
+            <MainPage path="/" />
+            <NotificationPage path="notifications" />
+            <SignInPage path="sign-in" />
+            <UploadPage path="upload" />
+          </Router>
+        </DeviceMock>
       </div>
     </div>
   );
