@@ -2,7 +2,7 @@ name: front-end
 on:
   push:
 jobs:
-  front-end:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -12,4 +12,7 @@ jobs:
         working-directory: front-end
       - name: Build
         run: npm run build
+        working-directory: front-end
+      - name: Unit Test
+        run: npm test
         working-directory: front-end
