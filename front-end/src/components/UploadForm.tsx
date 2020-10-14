@@ -28,7 +28,6 @@ function UploadForm(){
 
   function handlePopUpClick(){
     setPopUpElementType("");
-    console.log("HEYOHEYO");
   }
 
   return (
