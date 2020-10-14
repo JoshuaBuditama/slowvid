@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function PopUpElement({type, onPopUpClick}){
   
@@ -10,7 +10,7 @@ function PopUpElement({type, onPopUpClick}){
   return(
     <div className={`${type?"is-clipped":""}`}>
       {type && <div className={`modal ${type?"is-active":""}`}>
-        <div className="modal-background"></div>
+        <div className="modal-background" onClick={closePopUp}></div>
           <div className="modal-content">
             {type === "upload-success" && <section className="section">
               <div className="box">
