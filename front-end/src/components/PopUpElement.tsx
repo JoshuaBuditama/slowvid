@@ -11,8 +11,8 @@ function PopUpElement({type, onPopUpClick}){
     <div className={`${type?"is-clipped":""}`}>
       {type && <div className={`modal ${type?"is-active":""}`}>
         <div className="modal-background" onClick={closePopUp}></div>
-          <div className="modal-content">
-            {type === "upload-success" && <section className="section">
+          <div className="modal-content" onClick={closePopUp}>
+            {type === "upload-success" && <section className="section has-text-centered">
               <UploadSuccess></UploadSuccess>
             </section>}
           </div>
