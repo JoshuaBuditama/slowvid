@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import io from 'socket.io-client';
 import * as Conf from '../Conf';
 import * as EphemeralMgr from '../security_privacy/EphemeralMgr';
+import * as LocalStorage from './LocalStorage';
 import { IBluetoothMsgWithSignalStrength } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel';
 
 interface SessionProps {
@@ -23,24 +24,29 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
     reconnection: Conf.bluetoothReconnection,
   }));
 
-  const keyPair = EphemeralMgr.genKeyPair();
+  const keyPairUpload = EphemeralMgr.genKeyPair();
+  const keyPairQuery = EphemeralMgr.genKeyPair();
+  if (Conf.clearLocalStorageOnStartup) {
+    localStorage.clear();
+  }
   mockServices.on('connect', () => {
-    mockServices.emit('broadcast', EphemeralMgr.getId(keyPair));
+    mockServices.emit('broadcast', JSON.stringify([EphemeralMgr.getId(keyPairUpload), EphemeralMgr.getId(keyPairQuery)]));
     setInterval(() => {
-      mockServices.emit('broadcast', EphemeralMgr.getId(keyPair));
+      mockServices.emit('broadcast', JSON.stringify([EphemeralMgr.getId(keyPairUpload), EphemeralMgr.getId(keyPairQuery)]));
     }, Conf.bluetoothBroadcastPeriodMilliseconds);
   });
   mockServices.on('broadcast', (data: IBluetoothMsgWithSignalStrength) => {
-    const queryTableRaw = localStorage.getItem('queryTable');
-    if (keyPair) {
-      let queryTable : string[] = [];
-      if (queryTableRaw) {
-        queryTable = JSON.parse(queryTableRaw);
-      }
-	  const ecounterToken = EphemeralMgr.genEncounterToken(keyPair, data.latestMsg);
-	  if (!queryTable.includes(ecounterToken)) {
-		queryTable.push(ecounterToken);
-	  }
+    let foreignEmphIds : string[] = JSON.parse(data.latestMsg);
+    if (keyPairUpload && foreignEmphIds.length > 1) {
+      const ecounterToken = EphemeralMgr.genEncounterToken(keyPairUpload, foreignEmphIds[1]);
+      const uploadTableRaw = localStorage.getItem('uploadTable');
+      const uploadTable = LocalStorage.updateUploadTable(uploadTableRaw, ecounterToken, data.signalStrenth);
+      localStorage.setItem('uploadTable', JSON.stringify(uploadTable));
+    }
+    if (keyPairQuery && foreignEmphIds.length > 1) {
+      const ecounterToken = EphemeralMgr.genEncounterToken(keyPairQuery, foreignEmphIds[0]);
+      const queryTableRaw = localStorage.getItem('queryTable');
+      const queryTable = LocalStorage.updateQueryTable(queryTableRaw, ecounterToken);
       localStorage.setItem('queryTable', JSON.stringify(queryTable));
     }
   });
