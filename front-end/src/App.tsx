@@ -16,6 +16,10 @@ function App() {
           className="navbar-menu is-active"
           style={{ borderBottom: "1px solid lightgray" }}
         >
+          <div className="navbar-item" style={{"fontWeight":"bold"}} >
+            Demo controls:
+          </div>
+
           <Link className="navbar-item" to="/">
             MainPage
           </Link>
