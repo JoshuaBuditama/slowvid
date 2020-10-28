@@ -7,7 +7,6 @@ const app: express.Application = express();
 
 let db = new Database()
 db.connect("mongodb://localhost:27017/slowvid");
-UserModel.create({userId: "HASH_ID_TEST"});
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
