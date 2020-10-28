@@ -1,28 +1,28 @@
 import React from "react";
 import Warning from "../images/warning.jpg"
-import { UploadTableModel, IUploadTableDocument } from '../../../back-end/src/model/UploadTable';
-import { IQueryTableDocument, QueryTableModel } from '../../../back-end/src/model/QueryTable';
-import { UserModel } from '../../../back-end/src/model/User';
+import exmark from "../images/EXmark.png"
+// import { UploadTableModel, IUploadTableDocument } from '../../../back-end/src/model/UploadTable';
+// import { IQueryTableDocument, QueryTableModel } from '../../../back-end/src/model/QueryTable';
+import { IUserModel, IUserDocument } from '../../../back-end/src/model/User';
 
 function checkCloseContactFlag()
 {   
-
-    
+    return false;
 }
 
 
 function Positive()
 {
     return ( 
-        <div className="columns is-vcentered"> 
+        <div className="columns is-vcentered" style={{width: "90%", marginLeft: "5%"}}> 
             <div>
                 <img src={Warning} alt="Warning" width="100" height="100" style={{marginLeft: "37%", marginTop: "10%"}}/> 
-                <p className="is-size-6 has-text-centered" style={{width: "95%", marginLeft: "3%"}}>You have been in close contact with a person
+                <p className="is-size-5 has-text-centered" style={{width: "95%", marginLeft: "3%"}}>You have been in close contact with a person
                     who has COVID-19. Please <span style={{color: "red"}}><b>self isolate</b></span> and report to a <span style={{color: "red"}}><b>health
                     clinic</b></span> or a <span style={{color: "red"}}><b>health care professinal</b></span> </p>
                 <br></br>
-                <h1 className="is-size-5 has-text-centered" style={{width: "90%", marginLeft: "5%"}}>Quarantine at home and watch for symptoms for 14 days:</h1>
-                <ol style={{width: "80%", marginLeft: "15%"}}>
+                <h1 className="is-size-5 has-text-centered" >Quarantine at home and watch for symptoms for 14 days:</h1>
+                <ol >
                     <li>Watch for symptoms, even if mild, of cough, shortness of breath or difficulty breathing, fever,
                     chills, repeated shaking with chills, fatigue, muscle pain or body aches, headache, sore
                     throat, new loss of taste or smell, congestion or runny nose, nausea or vomiting, or diarrhea.</li>
@@ -40,10 +40,36 @@ function Positive()
 
 }
 
+function Negative()
+{
+    return ( 
+        <div className="columns is-vcentered" style={{width: "100%"}}> 
+            <div>
+                <img src={exmark} alt="no Notification" width="150" height="150" style={{marginLeft: "30%", marginTop: "30%", opacity: 0.4}}/> 
+                <h2 className="is-size-4 has-text-centered" style={{width: "95%", marginLeft: "8%"}}>
+                    No new Notifications.
+                </h2>
+                <br></br>
+                <p className="is-size-6 has-text-centered" style={{width: "100", marginLeft: "8%"}}>
+                    If you have come in close contact with a COVID-19 patient, you will be notified here!
+                </p>
+                
+            </div>
+        </div>
+    );
+
+}
+
 function Notify()
 {
-    return ( <Positive/>
-        );
+    if(checkCloseContactFlag())
+    {
+        return ( <Positive/> );
+    }
+    else
+    {
+        return ( <Negative/>);
+    }
 }
 
 export default Notify;
