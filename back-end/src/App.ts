@@ -6,10 +6,12 @@ import { UserModel} from './Model/User'
 import * as Conf from './Conf';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import passport from 'passport';
 
 // Create a new express application instance
 const app: express.Application = express();
 
+app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // cors is needed to allow http (axios) connection
