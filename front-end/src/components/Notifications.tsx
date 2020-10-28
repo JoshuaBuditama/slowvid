@@ -1,5 +1,15 @@
 import React from "react";
 import Warning from "../images/warning.jpg"
+import { UploadTableModel, IUploadTableDocument } from '../../../back-end/src/model/UploadTable';
+import { IQueryTableDocument, QueryTableModel } from '../../../back-end/src/model/QueryTable';
+import { UserModel } from '../../../back-end/src/model/User';
+
+function checkCloseContactFlag()
+{   
+
+    
+}
+
 
 function Positive()
 {
