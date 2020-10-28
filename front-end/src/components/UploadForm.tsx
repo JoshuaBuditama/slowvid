@@ -20,12 +20,6 @@ function UploadForm(){
       //send token to backend
       //if successful, display success message
       setSubmitStatus(true);
-      // setPopUpElementType("upload-success");
-      // return(
-      //   <div>
-      //     <Link to 
-      //   </div>
-      // );
     }
     else {
       //display error pop-up message
@@ -33,14 +27,16 @@ function UploadForm(){
   }
 
   function handlePopUpClick(){
-    // setPopUpElementType("");
     setSubmitStatus(false);
   }
   return (
     <div>
+      
+      {/**Notification that appears when the token submission is successful*/}
       {submitSuccess && <div className="notification">
         <UploadSuccess onPopUpClick={handlePopUpClick}/>
       </div>}
+
       {/**Header section*/}
       {!submitSuccess &&
         <section className="section is-medium has-text-centered">
