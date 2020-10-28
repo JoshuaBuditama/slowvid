@@ -3,7 +3,7 @@ import Warning from "../images/warning.jpg"
 import exmark from "../images/EXmark.png"
 // import { UploadTableModel, IUploadTableDocument } from '../../../back-end/src/model/UploadTable';
 // import { IQueryTableDocument, QueryTableModel } from '../../../back-end/src/model/QueryTable';
-import { IUserModel, IUserDocument } from '../../../back-end/src/model/User';
+//import { IUserModel, IUserDocument } from '../../../back-end/src/model/User';
 
 function checkCloseContactFlag()
 {   
