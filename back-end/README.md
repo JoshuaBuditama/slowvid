@@ -15,6 +15,21 @@
 
 1. Install MongoDB Compass. 💻
 
+1. Generate the back-end certificates (self-signed). 💻
+
+    The certificates are used by the Health Care Professional front-end.
+	Certificates are created into the `certificates` directory.
+
+    ```
+    npm run build
+	npm run keygen gen
+    ```
+
+	To generate a `.pfx` (used by Microsoft Windows) run the above commands then:
+    ```
+	npm run keygen pkcs
+    ```
+
 ## Run & Debug
 
 1. Start the database server: ▶️
