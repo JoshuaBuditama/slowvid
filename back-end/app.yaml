@@ -1,2 +1,3 @@
 service: back-end
 runtime: nodejs12
+entrypoint: npm start

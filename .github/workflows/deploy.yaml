@@ -20,8 +20,27 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: front-end
-      - name: gcloud info
-        run: gcloud info
       - name: Deploy
         run: gcloud app deploy --quiet 
         working-directory: front-end
+  back-end:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install gcloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '316.0.0'
+          project_id: slowvid
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm install
+        working-directory: back-end
+      - name: Build
+        run: npm run build
+        working-directory: back-end
+      - name: Deploy
+        run: gcloud app deploy --quiet 
+        working-directory: back-end
