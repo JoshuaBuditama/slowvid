@@ -6,13 +6,13 @@ function Positive()
     return ( 
         <div className="columns is-vcentered"> 
             <div>
-                <img src={Warning} alt="Warning" width="200" height="200" style={{marginLeft: "42%", marginTop: "10%"}}/> 
-                <p className="is-size-3 has-text-centered">You have been in close contact with a person
+                <img src={Warning} alt="Warning" width="100" height="100" style={{marginLeft: "37%", marginTop: "10%"}}/> 
+                <p className="is-size-6 has-text-centered" style={{width: "95%", marginLeft: "3%"}}>You have been in close contact with a person
                     who has COVID-19. Please <span style={{color: "red"}}><b>self isolate</b></span> and report to a <span style={{color: "red"}}><b>health
                     clinic</b></span> or a <span style={{color: "red"}}><b>health care professinal</b></span> </p>
                 <br></br>
-                <h1 className="is-size-3">Quarantine at home and watch for symptoms for 14 days:</h1>
-                <ol>
+                <h1 className="is-size-5 has-text-centered" style={{width: "90%", marginLeft: "5%"}}>Quarantine at home and watch for symptoms for 14 days:</h1>
+                <ol style={{width: "80%", marginLeft: "15%"}}>
                     <li>Watch for symptoms, even if mild, of cough, shortness of breath or difficulty breathing, fever,
                     chills, repeated shaking with chills, fatigue, muscle pain or body aches, headache, sore
                     throat, new loss of taste or smell, congestion or runny nose, nausea or vomiting, or diarrhea.</li>
