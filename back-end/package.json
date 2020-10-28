@@ -42,6 +42,7 @@
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.6",
     "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
     "typescript": "^4.0.2"
   }
 }
