@@ -13,7 +13,7 @@ function Home(props: RouteComponentProps) {
 		          <div className="column is-half">
 		            <div className="field">
 		              <p className="control">
-			              <form action="notifications">
+			              <form action="upload">
 			                <input
 			                  type="submit"
 			                  className="button is-link"
