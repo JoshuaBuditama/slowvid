@@ -2,7 +2,8 @@ import express from 'express';
 import https from 'https';
 import tls from 'tls';
 import { Database } from './model/Database'
-import { UserModel} from './model/User'
+import { router } from './routes/Router';
+import * as PassportConfig from './controllers/PassportConfig';
 import * as Conf from './Conf';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -12,6 +13,8 @@ import passport from 'passport';
 const app: express.Application = express();
 
 app.use(passport.initialize());
+PassportConfig.setupPassport(passport);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // cors is needed to allow http (axios) connection
@@ -19,6 +22,7 @@ app.use(cors()); // cors is needed to allow http (axios) connection
 let db = new Database()
 db.connect("mongodb://localhost:27017/slowvid");
 
+app.use('/api', router);
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
@@ -38,6 +42,7 @@ app.get('/authenticate', (req, res) => {
 		   .send(`Sorry, but you need to provide a client certificate to continue.`);
 	}
 });
+
 
 // listens on https
 https.createServer(Conf.httpsOptions, app).listen(4433, () => {
