@@ -1,17 +1,12 @@
 import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-const secret = "secret"; //process.env.SECRET || 'some other secret as default'; // TODO
+import { Strategy } from 'passport-jwt';
 import { HCPUserModel } from '../model/HCPUser';
-
-const opts = {
-	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: secret
-};
+import * as Conf from '../Conf';
 
 export function setupPassport(passport: passport.PassportStatic)
 {
 	passport.use(
-		new Strategy(opts, async (payload, done) => {
+		new Strategy(Conf.jwtOptions, async (payload, done) => {
 			try {
 				const user = await HCPUserModel.findById(payload.id);
 				if (user) {

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { HCPUserModel } from '../model/HCPUser';
 import { UserModel } from '../model/User';
+import * as Conf from '../Conf';
 
 export const register = async (req: express.Request, res: express.Response) => {
 	try {
@@ -39,7 +40,8 @@ export const login = async (req: express.Request, res: express.Response) => {
 				id: user._id,
 				emailAddress: user.emailAddress
 			};
-			const token = jwt.sign(payload, "secret", { expiresIn: 36000 }); //TODO
+			const token = jwt.sign(payload, Conf.jwtPrivateKey,
+				{ expiresIn: Conf.jwtTokenExpiry, algorithm: 'RS256' });
 			res.json({
 				success: true,
 				token: `Bearer ${token}`
