@@ -6,7 +6,7 @@ function Home(props: RouteComponentProps) {
       <div>
 	      <section className="section is-medium has-text-centered">
 		      <div className="container">
-		        <p className="is-size-3 has-text-centered">Slowvid is active
+		        <p className="is-size-3 has-text-centered">SlowVID is active
 		        </p>
 		        <br/>
 		        <br/>
