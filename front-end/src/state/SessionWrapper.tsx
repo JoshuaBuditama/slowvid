@@ -6,8 +6,8 @@ import * as LocalStorage from './LocalStorage';
 import { IBluetoothMsgWithSignalStrength } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel';
 
 interface SessionProps {
-  myName: string | null;
-  setMyName: React.Dispatch<React.SetStateAction<string | null>> | null;
+  consentProvided: boolean;
+  setConsentProvided: React.Dispatch<React.SetStateAction<boolean | null>> | null;
   mockServices: SocketIOClient.Socket;
 }
 
@@ -15,10 +15,10 @@ interface SessionWrapperProps {
   children: React.ReactNode;
 }
 
-const AppContext = createContext({ myName: "", setMyName: null, mockServices: null } as SessionProps);
+const AppContext = createContext({ mockServices: null, setConsentProvided: null, consentProvided: null} as SessionProps);
 
 export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (props : SessionWrapperProps) => {
-  const [myName, setMyName] = useState(localStorage.getItem("myName"));
+  const [consentProvided, setConsentProvided] = useState(localStorage.getItem("consentProvided")==='true');
   // called twice due to https://reactjs.org/docs/strict-mode.html
   const [mockServices, ] = useState(io(Conf.mockServicesAddr, {
     reconnection: Conf.bluetoothReconnection,
@@ -27,7 +27,8 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
   const keyPairUpload = EphemeralMgr.genKeyPair();
   const keyPairQuery = EphemeralMgr.genKeyPair();
   if (Conf.clearLocalStorageOnStartup) {
-    localStorage.clear();
+    localStorage.removeItem('uploadTable')
+    localStorage.removeItem('queryTable')
   }
   mockServices.on('connect', () => {
     mockServices.emit('broadcast', JSON.stringify([EphemeralMgr.getId(keyPairUpload), EphemeralMgr.getId(keyPairQuery)]));
@@ -52,15 +53,15 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
   });
 
   useEffect(() => {
-    localStorage.setItem("myName", myName || "");
-  }, [myName]);
+    localStorage.setItem("consentProvided", consentProvided===true ? 'true' : 'false');
+  }, [consentProvided]);
 
   return (
     <>
       <AppContext.Provider
         value={{
-          myName: myName,
-          setMyName: setMyName,
+          consentProvided: consentProvided,
+          setConsentProvided: setConsentProvided,
           mockServices: mockServices,
         }}
       >

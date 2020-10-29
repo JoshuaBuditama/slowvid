@@ -5,12 +5,13 @@ import MainPage from "./pages/MainPage";
 import NotificationPage from "./pages/NotificationPage";
 import SignInPage from "./pages/SignInPage";
 import UploadPage from "./pages/UploadPage";
+import ConsentPage from "./pages/ConsentPage";
 import DeviceMock from "./components/DeviceMock";
 
-function App() {
-  const { myName } = useSession();
+
+function Nav() {
+
   return (
-    <div className="App">
       <nav className="navbar" role="navigation">
         <div
           className="navbar-menu is-active"
@@ -32,24 +33,47 @@ function App() {
           <Link className="navbar-item" to="upload">
             UploadPage
           </Link>
-          <div className="navbar-item">
-            <span className="tag">{myName}</span>
-          </div>
+
+          <button className="button mt-2" onClick={()=>localStorage.clear()} >
+            Clear LocalStorage
+          </button>
         </div>
       </nav>
-      <div>
-        <DeviceMock>
-          <Router>
-            <MainPage path="/" />
-            <NotificationPage path="notifications" />
-            <SignInPage path="sign-in" />
-            <UploadPage path="upload" />
-          </Router>
-        </DeviceMock>
-      </div>
-    </div>
-  );
+  )
 }
+
+function App() {
+  const { consentProvided } = useSession();
+
+  if (consentProvided) {
+    return (
+      <div className="App">
+        <Nav />
+        <div>
+          <DeviceMock>
+            <Router>
+              <MainPage path="/" />
+              <NotificationPage path="notifications" />
+              <SignInPage path="sign-in" />
+              <UploadPage path="upload" />
+            </Router>
+          </DeviceMock>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <Nav />
+        <div>
+          <DeviceMock>
+              <ConsentPage />
+          </DeviceMock>
+        </div>
+      </div>
+    );
+  }
+  }
 
 export default function () {
   return (
