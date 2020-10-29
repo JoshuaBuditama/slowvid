@@ -1,8 +1,8 @@
 import express from 'express';
 import https from 'https';
 import tls from 'tls';
-import { Database } from './Model/Database'
-import { UserModel} from './Model/User'
+import { Database } from './model/Database'
+import { UserModel} from './model/User'
 import * as Conf from './Conf';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -18,7 +18,6 @@ app.use(cors()); // cors is needed to allow http (axios) connection
 
 let db = new Database()
 db.connect("mongodb://localhost:27017/slowvid");
-UserModel.create({userId: "HASH_ID_TEST"});
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
