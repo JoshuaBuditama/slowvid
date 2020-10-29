@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-const http: AxiosInstance = axios.create({ baseURL: 'http://localhost:3000/api' });
+const http: AxiosInstance = axios.create({ baseURL: 'https://localhost:4000/api' });
 export let authBearer: string;
 
 export const register = async (emailAddress: string, password: string) => {
