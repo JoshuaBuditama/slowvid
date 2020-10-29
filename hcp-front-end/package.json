@@ -16,11 +16,14 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
+    "run-script-os": "^1.1.3",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "set PORT=8003&& set HTTPS=true&& set SSL_CRT_FILE=..\\back-end\\certificates\\backend_cert.pem&& set SSL_KEY_FILE=..\\back-end\\certificates\\backend_key.pem&& react-scripts start",
+	"start": "run-script-os",
+    "start:windows": "set PORT=8003&& set HTTPS=true&& set SSL_CRT_FILE=..\\back-end\\certificates\\backend_cert.pem&& set SSL_KEY_FILE=..\\back-end\\certificates\\backend_key.pem&& react-scripts start",
+    "start:nix": "export PORT=8003 && export HTTPS=true && export SSL_CRT_FILE=../back-end/certificates/backend_cert.pem && export SSL_KEY_FILE=../back-end/certificates/backend_key.pem&& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
