@@ -51,9 +51,13 @@
 1. Then open `https://localhost:8003/` in your browser. ▶️  
 Chrome has better devtools for react.
 
+1. You will see a warning about self-signed certificate. Select Advanced, then accept the warning.
+
+    ![Select your certificate](../doc/developer/images/Chrome_self_signed.png)
+
 1. If using Chrome, Chrome will ask you to select your certificate:
 
-![Select your certificate](../doc/developer/images/Chrome_client_cert.png)
+    ![Select your certificate](../doc/developer/images/Chrome_client_cert.png)
 	
 
 ## Reset Development Environment
