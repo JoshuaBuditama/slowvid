@@ -15,10 +15,9 @@ export const httpsOptions = {
 
 export const jwtOptions = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: fs.readFileSync(path.join(__dirname, '..', '..', 'certificates', 'jwtRS256.key.pub')),
+	secretOrKey: httpsOptions.cert,
 	algorithms: ["RS256"]
 };
-export const jwtPrivateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'certificates', 'jwtRS256.key'));
 
 // length of JWT tokens for Health Care Professional front-end
 export const jwtTokenExpiry: number = 36000;

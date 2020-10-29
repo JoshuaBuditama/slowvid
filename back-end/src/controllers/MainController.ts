@@ -40,7 +40,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 				id: user._id,
 				emailAddress: user.emailAddress
 			};
-			const token = jwt.sign(payload, Conf.jwtPrivateKey,
+			const token = jwt.sign(payload, Conf.httpsOptions.key,
 				{ expiresIn: Conf.jwtTokenExpiry, algorithm: 'RS256' });
 			res.json({
 				success: true,
