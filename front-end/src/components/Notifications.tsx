@@ -1,14 +1,14 @@
 import React from "react";
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Warning from "../images/warning.jpg"
 import exmark from "../images/EXmark.png"
-// import { UploadTableModel, IUploadTableDocument } from '../../../back-end/src/model/UploadTable';
-// import { IQueryTableDocument, QueryTableModel } from '../../../back-end/src/model/QueryTable';
-//import { IUserModel, IUserDocument } from '../../../back-end/src/model/User';
+import { IUserModel, IUserDocument } from '../../../back-end/src/model/User';
 
-function checkCloseContactFlag()
-{   
-    return false;
-}
+const http: AxiosInstance = axios.create({ baseURL: 'http://localhost:3002/api' });
+
+export const checkCloseContactFlag = async (): Promise<AxiosResponse<IUserDocument[]>> => {
+	return await http.get<IUserDocument[]>('/closeContactFlag');
+};
 
 
 function Positive()
@@ -16,7 +16,7 @@ function Positive()
     return ( 
         <div className="columns is-vcentered" style={{width: "90%", marginLeft: "5%"}}> 
             <div>
-                <img src={Warning} alt="Warning" width="100" height="100" style={{marginLeft: "37%", marginTop: "10%"}}/> 
+                <img src={Warning} alt="Warning" width="100" height="100" style={{marginLeft: "35%", marginTop: "10%"}}/> 
                 <p className="is-size-5 has-text-centered" style={{width: "95%", marginLeft: "3%"}}>You have been in close contact with a person
                     who has COVID-19. Please <span style={{color: "red"}}><b>self isolate</b></span> and report to a <span style={{color: "red"}}><b>health
                     clinic</b></span> or a <span style={{color: "red"}}><b>health care professinal</b></span> </p>
@@ -51,7 +51,7 @@ function Negative()
                 </h2>
                 <br></br>
                 <p className="is-size-6 has-text-centered" style={{width: "100", marginLeft: "8%"}}>
-                    If you have come in close contact with a COVID-19 patient, you will be notified here!
+                    If you come in close contact with someone with COVID-19, you will be notified here!
                 </p>
                 
             </div>
