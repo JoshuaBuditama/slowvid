@@ -1,6 +1,6 @@
 import express from 'express';
-import { Database } from './Model/Database'
-import { UserModel} from './Model/User'
+import { Database } from './model/Database'
+import { UserModel} from './model/User'
 
 // Create a new express application instance
 const app: express.Application = express();
