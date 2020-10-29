@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { HCPUserModel } from '../model/HCPUser';
+import { UserModel } from '../model/User';
 
 export const register = async (req: express.Request, res: express.Response) => {
 	HCPUserModel.findOne({ emailAddress: req.body.emailAddress })
@@ -63,9 +64,25 @@ export const login = async (req: express.Request, res: express.Response) => {
 		});
 }
 
+export const confirm = async (req: express.Request, res: express.Response) => {
+	try {
+		let user = await UserModel.findOne({ deviceId: req.body.deviceId });
+		if (user) {
+			user.closeContactFlag = true;
+			await user.save();
+			return res.status(200).json("success");
+		} else {
+			return res.status(404).json("Device not found");
+		}
+	} catch (err: any) {
+		res.status(400).json("Error occured during confirm");
+	}
+}
+
 const MainController = {
 	register,
 	login,
+	confirm,
 };
 
 export default MainController;

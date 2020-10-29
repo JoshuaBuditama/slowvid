@@ -5,6 +5,5 @@ import passport from 'passport';
 export const router = express.Router();
 router.post('/register', MainController.register);
 router.post('/login', MainController.login);
-router.get('/testy', passport.authenticate('jwt', {session: false}), (req: express.Request, res: express.Response) => {
-	res.send('Testy!');
-});
+router.post('/confirm', passport.authenticate('jwt', { session: false }),
+	MainController.confirm);
