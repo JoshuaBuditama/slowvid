@@ -48,6 +48,14 @@
 			"url": "http://localhost:8002",
 			"webRoot": "${workspaceFolder}/bluetooth-front-end/src",
 			"preLaunchTask": "start-bluetooth-front-end"
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "HCP Front-End",
+			"url": "http://localhost:8003",
+			"webRoot": "${workspaceFolder}/hcp-front-end/src",
+			"preLaunchTask": "start-hcp-front-end"
 		}
 	]
 }
