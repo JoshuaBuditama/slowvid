@@ -1,11 +1,13 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
-    userId: String,
+	deviceId: String,
+	closeContactFlag: Boolean,
 });
 
 export interface IUser {
-    userId: string;
+	deviceId: string;
+	closeContactFlag: boolean;
 }
 
 export interface IUserDocument extends IUser, mongoose.Document { };

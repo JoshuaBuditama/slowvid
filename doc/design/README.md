@@ -30,6 +30,12 @@
 
 # SlowVid Back-End
 
+## Entity Relationship Diagrams
+
+1. Back-end
+
+	![Back-end Entity Relationship Diagram](back-end-entity-relationship.png)
+
 ## Class Diagrams
 
 1. Back-end
