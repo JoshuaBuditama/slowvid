@@ -7,3 +7,7 @@ export const bluetoothBroadcastPeriodMilliseconds: number = 10000;
 export const bluetoothReconnection: boolean = false;
 // Clear browser local storage (Slowvid keys only) at startup
 export const clearLocalStorageOnStartup: boolean = true;
+
+export const checkCloseContactFlagPeriodMilliseconds: number = 10000;
+//remove when issues #23 and #25 are implemented
+export const deviceId: string = "deviceId";
