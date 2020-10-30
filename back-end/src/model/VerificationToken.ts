@@ -11,4 +11,4 @@ export interface IVerificationToken {
 export interface IVerificationTokenDocument extends IVerificationToken, mongoose.Document { };
 export interface IVerificationTokenModel extends mongoose.Model<IVerificationTokenDocument> { };
 
-export const VerificationTokenModel = mongoose.model<IVerificationTokenDocument>("verificationToken", VerificationTokenSchema);
+export const VerificationTokenModel = mongoose.model<IVerificationTokenDocument>("verificationtokens", VerificationTokenSchema);
