@@ -16,6 +16,7 @@
 				"<node_internals>/**"
 			],
 			"type": "pwa-node",
+			"console": "integratedTerminal",
 			"cwd": "${workspaceFolder}/back-end"
 		},
 		{
@@ -53,7 +54,7 @@
 			"type": "chrome",
 			"request": "launch",
 			"name": "HCP Front-End",
-			"url": "http://localhost:8003",
+			"url": "https://localhost:8003",
 			"webRoot": "${workspaceFolder}/hcp-front-end/src",
 			"preLaunchTask": "start-hcp-front-end"
 		}
