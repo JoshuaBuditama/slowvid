@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 export const HCPUserSchema = new mongoose.Schema({
+	hcpID: {
+		type: String,
+		required: true,
+		unique: true
+	},
 	emailAddress: {
 		type: String,
 		required: true,
