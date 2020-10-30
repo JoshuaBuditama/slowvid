@@ -63,15 +63,10 @@ export default class App extends React.Component {
                 code: this.state.otp
             }
         })
-            .then(data =>
-            // valid = true
-            {
-                if (data.valid === true)
-                    alert("This phone number was successfully verified, moving to the home page.");
-                else
-                    alert("Oops! Wrong OTP!");
-            }// this.tohome()
-            )
+            .then(data =>{
+                // alert("Your Your phone number has been sucessfully verified");
+                this.tohome();
+            })
             .catch(err =>
                 // valid = false
                 alert("Oops! Wrong OTP.")

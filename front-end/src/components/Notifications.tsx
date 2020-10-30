@@ -24,7 +24,11 @@ function Positive()
                     household items. </li>
                     <li>Stay connected with others – use technology to communicate with friends and family. </li>
                 </ol>  
+                <div style={{  justifyContent: 'center', marginTop: 10,marginLeft:20 }}>
+                <a href='upload' style={{ textDecoration: 'none', fontSize: 40 }}>Report your case!</a>
             </div>
+            </div>
+            
         </div>
     );
 

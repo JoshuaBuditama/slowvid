@@ -35,6 +35,6 @@ exports.verifyCode = async (req, res,err) => {
         })
         .then(data => {
             console.log(data);
-            res.status(200).send(data);
+            res.status(200).send({ message: "Your phone number has been verified" });
         });
 };
