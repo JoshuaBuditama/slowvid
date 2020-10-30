@@ -9,7 +9,7 @@ export class WebToken{
             hcpID: "placeholderHCPID"   // provided by health care professional
         }
         // algorithm is RSA SHA256 
-        let token = jwt.sign(payload, pk, {algorithm: 'RS256' , expiresIn: 60 * 30}); // can also sign with a secret in .env file
+        let token = jwt.sign(payload, pk, {algorithm: 'RS256'} ,{expiresIn: 60 * 30}); // can also sign with a secret in .env file
         return token;
     }
 }

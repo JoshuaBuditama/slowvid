@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { WebToken } from '../model/Verification';
 import { HCPUserModel } from '../model/HCPUser';
 import { UserModel } from '../model/User';
+import { VerificationTokenModel } from '../model/VerificationToken';
 import * as Conf from '../Conf';
 
 export const register = async (req: express.Request, res: express.Response) => {
@@ -60,9 +61,17 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 		let user = await UserModel.findOne({ deviceId: req.body.deviceId });
 		let hcp = await HCPUserModel.findOne({ hcpId: req.body.hcpId });
 		let token = WebToken.setToken(req.body.deviceId, req.body.hcpId); // creating the JWT token
-		if (user) {
+		if (user && hcp) {
 			user.closeContactFlag = true;
 			await user.save();
+
+			//creating new verification token entry in the database
+			const newToken = new VerificationTokenModel({
+				value: token
+			});
+
+			// save the new verification token
+			await newToken.save();
 			return res.status(200).json({message: "success", verificationToken: token});
 		} else {
 			return res.status(404).json("Device not found");
@@ -72,11 +81,11 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 	}
 }
 
-export const createToken = async (req: express.Request, res: express.Response) => {
+export const submitToken = async (req: express.Request, res: express.Response) => {
 	try{
 		console.log("HURRAY");
 		console.log(req.body);
-		return res.status(200).json("create token success");
+		return res.status(200).json("Successful token submission!");
 	} catch (err: any) {
 		res.status(400).json("Error occurred during token creation process");
 	}
@@ -85,11 +94,23 @@ export const createToken = async (req: express.Request, res: express.Response) =
     // console.log(token); // HCP should show the token to the patient
 }
 
+// export const createToken = async (req: express.Request, res: express.Response) => {
+// 	try{
+// 		console.log("HURRAY");
+// 		console.log(req.body);
+// 		return res.status(200).json("create token success");
+// 	} catch (err: any) {
+// 		res.status(400).json("Error occurred during token creation process");
+// 	}
+//     // var verificationToken = "temp";
+//     // var token = WebToken.setToken(verificationToken, "placeholderHCPID"); // add placeholder string until we get HCP ID properly
+//     // console.log(token); // HCP should show the token to the patient
+// }
 const MainController = {
 	register,
 	login,
 	confirm,
-	createToken
+	submitToken
 };
 
 export default MainController;
