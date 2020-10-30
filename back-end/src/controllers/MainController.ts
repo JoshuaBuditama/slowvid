@@ -69,10 +69,18 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 	}
 }
 
+export const createToken = async (req: express.Request, res: express.Response) => {
+    console.log(req);
+    // var verificationToken = "temp";
+    // var token = WebToken.setToken(verificationToken, "placeholderHCPID"); // add placeholder string until we get HCP ID properly
+    // console.log(token); // HCP should show the token to the patient
+}
+
 const MainController = {
 	register,
 	login,
 	confirm,
+	createToken
 };
 
 export default MainController;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UploadSuccess from "../components/UploadSuccess";
+import MainController from "../controller/MainController"
 
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
@@ -19,6 +20,7 @@ function UploadForm(){
     if(validToken()){
       //send token to backend
       //if successful, display success message
+      console.log(MainController.createToken());
       setSubmitStatus(true);
     }
     else {

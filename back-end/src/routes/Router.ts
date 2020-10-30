@@ -11,3 +11,4 @@ router.post('/register', MainController.register);
 router.post('/login', MainController.login);
 router.post('/confirm', passport.authenticate('jwt', { session: false }),
 	MainController.confirm);
+router.get('/createToken', MainController.createToken);
