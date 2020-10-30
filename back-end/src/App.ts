@@ -2,6 +2,7 @@ import express from 'express';
 import https from 'https';
 import { Database } from './model/Database'
 import { router } from './routes/Router';
+import { userRouter } from './routes/UserRouter';
 import * as PassportConfig from './controllers/PassportConfig';
 import * as Conf from './Conf';
 import cors from 'cors';
@@ -22,6 +23,7 @@ let db = new Database()
 db.connect("mongodb://localhost:27017/slowvid");
 
 app.use('/api', router);
+app.use('/user', userRouter);
 
 app.get('/', function (req, res) {
   res.send('Hello World!');

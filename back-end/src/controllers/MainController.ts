@@ -70,7 +70,12 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 }
 
 export const createToken = async (req: express.Request, res: express.Response) => {
-    console.log(req);
+	try{
+		console.log(req);
+		return res.status(200).json("create token success");
+	} catch (err: any) {
+		res.status(400).json("Error occurred during token creation process");
+	}
     // var verificationToken = "temp";
     // var token = WebToken.setToken(verificationToken, "placeholderHCPID"); // add placeholder string until we get HCP ID properly
     // console.log(token); // HCP should show the token to the patient
