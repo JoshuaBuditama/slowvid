@@ -10,23 +10,35 @@
 var fileSystem = require("fs");
 
 const rsa = require('node-rsa');
-//use key 1024 byte 
-const key = new rsa({b: 1024}); //pub and private
+//use key 4096 byte 
+const key = new rsa({ b: 4096 }); //pub and private
+
+var publicKey = new rsa();
+var privateKey = new rsa();
 
 function generateKeys() {
-    
+
     //export both keys
     var public_key = key.exportKey('public');
-    
+
     var private_key = key.exportKey('private');
 
 
     //input file write the key into the files
-    fileSystem.openSync("./key/public.pem","w");
+    fileSystem.openSync("./key/public.pem", "w");
     fileSystem.writeFileSync("./key/public.pem", public_key, "utf8");
-    //write for private
-    fileSystem.openSync("./key/private.pem","w");
-    fileSystem.writeFileSync("./key/private.pem", private_key, "utf8");
+
+    publicKey.importKey(public_key);
+    privateKey.importKey(private_key);
+}
+
+//encrypt data
+function encrypteInput(data) {
+    //encrypt with privatekey
+    const encryptedVar = privateKey.encryptPrivate(data, "base64");
+    return encryptedVar;
 }
 
 generateKeys();
+//token will input here
+encrypteInput("this is the secret");
