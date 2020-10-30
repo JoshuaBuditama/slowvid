@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { WebToken } from '../model/Verification';
 import { HCPUserModel } from '../model/HCPUser';
 import { UserModel } from '../model/User';
 import * as Conf from '../Conf';
@@ -57,10 +58,12 @@ export const login = async (req: express.Request, res: express.Response) => {
 export const confirm = async (req: express.Request, res: express.Response) => {
 	try {
 		let user = await UserModel.findOne({ deviceId: req.body.deviceId });
+		let hcp = await HCPUserModel.findOne({ hcpId: req.body.hcpId });
+		let token = WebToken.setToken(req.body.deviceId, req.body.hcpId); // creating the JWT token
 		if (user) {
 			user.closeContactFlag = true;
 			await user.save();
-			return res.status(200).json("success");
+			return res.status(200).json({message: "success"});
 		} else {
 			return res.status(404).json("Device not found");
 		}
