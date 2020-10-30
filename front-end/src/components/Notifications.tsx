@@ -1,11 +1,7 @@
 import React from "react";
 import Warning from "../images/warning.jpg"
 import exmark from "../images/EXmark.png"
-
-function checkCloseContactFlag()
-{
-    return false;
-}
+import {SessionWrapper, useSession} from "../state"
 
 function Positive()
 {
@@ -58,7 +54,7 @@ function Negative()
 
 function Notify()
 {
-    if(checkCloseContactFlag())
+    if(useSession().closeContactFlag)
     {
         return ( <Positive/> );
     }
