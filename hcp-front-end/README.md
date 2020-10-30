@@ -36,9 +36,13 @@
 
    1. On Microsoft Windows, use the `.pfx` file as per https://superuser.com/a/1182358/1235035
 
+      The Group Policy instructions `Computer Configuration` -> `Windows Settings` -> `Security Settings` -> `Public Key Policies` may not be required.
+
 1. Import the `HCPName_cert.pem` as a Personal certificate
 
    1. On Microsoft Windows, use the `.pfx` file as per https://superuser.com/a/1182358/1235035
+
+      The Group Policy instructions `Computer Configuration` -> `Windows Settings` -> `Security Settings` -> `Public Key Policies` may not be required.
 
 ## Run & Debug
 
