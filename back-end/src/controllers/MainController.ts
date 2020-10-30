@@ -71,7 +71,8 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 
 export const createToken = async (req: express.Request, res: express.Response) => {
 	try{
-		console.log(req);
+		console.log("HURRAY");
+		console.log(req.body);
 		return res.status(200).json("create token success");
 	} catch (err: any) {
 		res.status(400).json("Error occurred during token creation process");

@@ -20,7 +20,8 @@ function UploadForm(){
     if(validToken()){
       //send token to backend
       //if successful, display success message
-      console.log(MainController.createToken());
+      // console.log(MainController.createToken());
+      // await MainController.submitToken();
       setSubmitStatus(true);
     }
     else {
