@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 const http: AxiosInstance = axios.create({ baseURL: 'https://localhost:4000/api' });
 export let authBearer: string;
@@ -26,15 +26,16 @@ export const login = async (emailAddress: string, password: string) => {
 	}
 };
 
-export const confirm = async (deviceId: string) => {
+export const confirm = async (deviceId: string): Promise<AxiosResponse> => {
 	try {
-		await http.post('/confirm', {
+		let result = await http.post('/confirm', {
 			deviceId: deviceId,
 			hcpId: "tempHCPID" // Will need to find a way to get the actual HCP ID 
 		}, {
 			headers:
 				{ Authorization: authBearer }
-		});
+		})
+		return result;
 	} catch (err: any) {
 		throw err.response?.data || "Error occured during confirm";
 	}

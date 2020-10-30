@@ -63,7 +63,7 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 		if (user) {
 			user.closeContactFlag = true;
 			await user.save();
-			return res.status(200).json({message: "success"});
+			return res.status(200).json({message: "success", verificationToken: token});
 		} else {
 			return res.status(404).json("Device not found");
 		}
