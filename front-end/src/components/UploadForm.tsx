@@ -1,29 +1,45 @@
 import React, { useState } from "react";
 import UploadSuccess from "../components/UploadSuccess";
+import MainController from "../controller/MainController"
 
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
   const [submitSuccess, setSubmitStatus] = useState(false);
+  
+  //Need to fix the validity checker
   function validToken() {
-    const validTokenCombination = /^[A-Z]+$/;
-    const validTokenLength = 4;
-    if(verificationToken.match(validTokenCombination) && verificationToken.length === validTokenLength)
-    {
-      return true;
-    }
-    return false;
+    // const validTokenCombination = /^[A-Z]+$/;
+    // const validTokenLength = 4;
+    // if(verificationToken.match(validTokenCombination) && verificationToken.length === validTokenLength)
+    // {
+    return true;
+    // }
+    // return false;
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if(validToken()){
-      //send token to backend
-      //if successful, display success message
-      setSubmitStatus(true);
+    setSubmitStatus(false);
+    try{
+      MainController.submitToken(verificationToken)
+      .then(result => {setSubmitStatus(true)})
+      .catch(err => alert("Error occurred during token submission!"));
+		} catch (err) {
+      if(err instanceof Error){
+          throw err.message || "Error occurred during token submission!";
+      }
     }
-    else {
-      //display error pop-up message
-    }
+    // if(validToken()){
+    //   //send token to backend
+    //   //if successful, display success message
+    //   // console.log(MainController.createToken());
+    //   // await MainController.submitToken();
+    //   setSubmitStatus(true);
+    // }
+    // else {
+    //   //display error pop-up message
+    //   alert("Token not found!"); //can change this to a proper message similar to the success message
+    // }
   }
 
   function handlePopUpClick(){

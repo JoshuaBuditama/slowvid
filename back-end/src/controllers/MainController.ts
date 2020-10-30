@@ -83,9 +83,13 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 
 export const submitToken = async (req: express.Request, res: express.Response) => {
 	try{
-		console.log("HURRAY");
-		console.log(req.body);
-		return res.status(200).json("Successful token submission!");
+		let token = await VerificationTokenModel.findOne({value: req.body.token}); //also need to check for expiry date later on
+		if(token){
+			return res.status(200).json("Successful token submission!");	
+		}
+		else{
+			return res.status(404).json("Token not found!");
+		}
 	} catch (err: any) {
 		res.status(400).json("Error occurred during token creation process");
 	}
