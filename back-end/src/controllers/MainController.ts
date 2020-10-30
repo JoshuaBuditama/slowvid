@@ -42,10 +42,12 @@ export const login = async (req: express.Request, res: express.Response) => {
 			};
 			const token = jwt.sign(payload, Conf.httpsOptions.key,
 				{ expiresIn: Conf.jwtTokenExpiry, algorithm: 'RS256' });
-			res.json({
+			return res.json({
 				success: true,
 				token: `Bearer ${token}`
 			});
+		} else {
+			return res.status(404).json("Incorrect password");
 		}
 	} catch (err: any) {
 		res.status(400).json("Error occured during register")
