@@ -18,10 +18,13 @@ export const ConfirmPage: React.FunctionComponent<ConfirmPageProps> = (props) =>
 	const onSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		setValidForm(false);
-		const success = await MainController.confirm(deviceId);
-		setValidForm(true);
-		if (!success) {
-			alert("Confirm unsuccessful");
+		try {
+			const success = await MainController.confirm(deviceId);
+			alert("Confirm successful");
+		} catch (e: any) {
+			alert(e);
+		} finally {
+			setValidForm(true);
 		}
 	}
 

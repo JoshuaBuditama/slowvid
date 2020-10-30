@@ -20,8 +20,14 @@ export const RegisterPage: React.FunctionComponent<RouteComponentProps> = () => 
 	const onSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		setValidForm(false);
-		await MainController.register(emailAddress, password);
-		setValidForm(true);
+		try {
+			await MainController.register(emailAddress, password);
+			alert("Register successful");
+		} catch (e: any) {
+			alert(e);
+		} finally {
+			setValidForm(true);
+		}
 	}
 
 	return (

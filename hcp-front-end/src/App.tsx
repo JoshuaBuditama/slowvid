@@ -17,9 +17,11 @@ function App() {
 					<Link className="navbar-item" to="/">
 						Login
 					</Link>
+					&nbsp;
 					<Link className="navbar-item" to="register">
 						Register
 					</Link>
+					&nbsp;
 					{loggedIn ?
 						<Link className="navbar-item" to="confirm">
 							Confirm User

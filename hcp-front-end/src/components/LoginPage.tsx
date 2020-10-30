@@ -1,9 +1,9 @@
 import React from "react";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps, Link } from "@reach/router";
 import * as MainController from "../controllers/MainController";
 
 interface LoginPageProps extends RouteComponentProps {
-	setLoggedIn : React.Dispatch<React.SetStateAction<boolean>>;
+	setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const LoginPage: React.FunctionComponent<LoginPageProps> = (props) => {
@@ -24,16 +24,21 @@ export const LoginPage: React.FunctionComponent<LoginPageProps> = (props) => {
 	const onSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		setValidForm(false);
-		const success = await MainController.login(emailAddress, password);
-		props.setLoggedIn(success);
-		setValidForm(true);
-		if (!success) {
-			alert("Login unsuccessful");
+		try {
+			await MainController.login(emailAddress, password);
+			props.setLoggedIn(true);
+			alert("Login successful");
+		} catch (e: any) {
+			props.setLoggedIn(false);
+			alert(e);
+		} finally {
+			setValidForm(true);
 		}
 	}
 
 	return (
 		<>
+			<p>If you don't have an account, please <Link to="register">register</Link> before logging in.</p>
 			<p>Login:</p>
 			<div>Email: </div><input type="text" value={emailAddress} onChange={onEmailAddress} />
 			<div>Password: </div><input type="password" value={password} onChange={onPassword} />

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 const http: AxiosInstance = axios.create({ baseURL: 'https://localhost:4000/api' });
 export let authBearer: string;
@@ -10,34 +10,31 @@ export const register = async (emailAddress: string, password: string) => {
 			password: password,
 		});
 	} catch (err: any) {
-		console.log(err);
+		throw err.response?.data || "Error occured during register";
 	}
 };
 
-export const login = async (emailAddress: string, password: string): Promise<boolean> => {
+export const login = async (emailAddress: string, password: string) => {
 	try {
 		const res = await http.post('/login', {
 			emailAddress: emailAddress,
 			password: password,
 		});
 		authBearer = res.data.token;
-		return true;
 	} catch (err: any) {
-		return false;
+		throw err.response?.data || "Error occured during login";
 	}
 };
 
-export const confirm = async (deviceId: string): Promise<boolean> => {
+export const confirm = async (deviceId: string) => {
 	try {
-		const res = await http.post('/confirm', {
+		await http.post('/confirm', {
 			deviceId: deviceId,
 		}, {
 			headers:
 				{ Authorization: authBearer }
 		});
-		console.log(res);
-		return true;
 	} catch (err: any) {
-		return false;
+		throw err.response?.data || "Error occured during confirm";
 	}
 };
