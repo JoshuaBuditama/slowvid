@@ -24,3 +24,5 @@ export const getCloseContactFlag = async (req: express.Request, res: express.Res
 const RequestController = {
     getCloseContactFlag
 }
+
+export default RequestController;
