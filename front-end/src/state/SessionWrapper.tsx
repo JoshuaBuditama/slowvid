@@ -4,8 +4,8 @@ import * as Conf from '../Conf';
 import * as EphemeralMgr from '../security_privacy/EphemeralMgr';
 import * as LocalStorage from './LocalStorage';
 import { IBluetoothMsgWithSignalStrength } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel';
-import axios, {AxiosInstance, AxiosResponse} from 'axios';
-import {setCommentRange } from "typescript";
+import axios, {AxiosInstance} from 'axios';
+//import {setCommentRange } from "typescript";
 
 interface SessionProps {
   consentProvided: boolean;
