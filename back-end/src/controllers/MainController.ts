@@ -12,7 +12,7 @@ import * as Conf from '../Conf';
  */
 export const register = async (req: express.Request, res: express.Response) => {
 	try {
-		let user = await HCPUserModel.findOne({ emailAddress: req.body.emailAddress });
+		let user = await HCPUserModel.findOne({ emailAddress: req.body.emailAddress }).exec();
 		if (user) {
 			return res.status(400).json("Email already exists");
 		} else {
@@ -41,7 +41,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 	const email = req.body.emailAddress;
 	const password = req.body.password;
 	try {
-		const user = await HCPUserModel.findOne({ emailAddress: email });
+		const user = await HCPUserModel.findOne({ emailAddress: email }).exec();
 		if (!user) {
 			return res.status(404).json("Incorrect credentials");
 		}
@@ -56,6 +56,8 @@ export const login = async (req: express.Request, res: express.Response) => {
 			};
 			const token = jwt.sign(payload, Conf.httpsOptions.key,
 				{ expiresIn: Conf.jwtTokenExpiry, algorithm: 'RS256' });
+			user.incorrectPasswordAttempts = 0;
+			await user.save();
 			return res.status(200).json({
 				success: true,
 				token: `Bearer ${token}`
@@ -82,7 +84,7 @@ export const login = async (req: express.Request, res: express.Response) => {
  */
 export const confirm = async (req: express.Request, res: express.Response) => {
 	try {
-		let user = await UserModel.findOne({ deviceId: req.body.deviceId });
+		let user = await UserModel.findOne({ deviceId: req.body.deviceId }).exec();
 		if (user) {
 			user.closeContactFlag = true;
 			await user.save();
