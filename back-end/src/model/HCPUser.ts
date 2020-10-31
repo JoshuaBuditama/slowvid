@@ -9,12 +9,16 @@ export const HCPUserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true
-	}
+	},
+	locked: Boolean,
+	incorrectPasswordAttempts: Number,
 });
 
 export interface IHCPUser {
 	emailAddress: string;
 	password: string;
+	locked: boolean;
+	incorrectPasswordAttempts: number;
 }
 
 export interface IHCPUserDocument extends IHCPUser, mongoose.Document { };
