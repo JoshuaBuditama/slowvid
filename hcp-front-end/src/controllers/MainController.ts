@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 const http: AxiosInstance = axios.create({ baseURL: 'https://localhost:4000/api' });
 export let authBearer: string;

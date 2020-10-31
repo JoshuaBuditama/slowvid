@@ -64,7 +64,7 @@ Chrome has better devtools for react.
     ![Select your certificate](../doc/developer/images/Chrome_client_cert.png)
 
 1. After registering, HCP accounts are locked awaiting vetting from the Slowvid
-administrators. To unlock account, use MongoDB Compass (see back-end's [README.md](../back-end/README.md]) to set `locked` to `false`.
+administrators. To unlock account, use MongoDB Compass (see back-end's [README.md](../back-end/README.md])) to set `locked` to `false`.
 
     ![Update HCP](../doc/developer/images/MongoDB_Compass_update_HCP.png)
 
