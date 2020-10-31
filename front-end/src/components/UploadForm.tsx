@@ -50,9 +50,6 @@ function UploadForm(){
                     placeholder="Please insert the token here"
                     onChange={e => setVerificationToken(e.target.value) }
                   />
-                  {verificationToken && <p className="help is-danger">
-                    Please insert a valid token
-                  </p>}
                 </div>
               </div>
         
