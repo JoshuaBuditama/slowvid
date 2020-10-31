@@ -27,55 +27,49 @@ export default class App extends React.Component {
             otpShow: false,
             otp: '',
             time: {},
-            seconds: 30
+            seconds: 60
         };
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
     }
     _getCode = async () => {
-        this.setState({ seconds: 30, time: this.secondsToTime(30) });
-        const e = this.state.code + this.state.pno;
-        await axios.get("http://localhost:8000/verify/getcode", {
-            params: {
-                phonenumber: e,
-                channel: 'sms'
-            }
-        })
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-
-            
+        try {
+            this.setState({ seconds: 60, time: this.secondsToTime(60) });
+            const e = this.state.code + this.state.pno;
+            await axios.get("http://localhost:8000/verify/getcode", {
+                params: {
+                    phonenumber: e,
+                    channel: 'sms'
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     };
 
-    _checkResponse = (val) => {
-        if (val === "NO") {
-            alert("1.Incorrect phone number")
-        }
-
-    }
 
     _verifyCode = async () => {
-        const e = this.state.code + this.state.pno;
-        await axios.get("http://localhost:8000/verify/verifycode", {
-            params: {
-                phonenumber: e,
-                code: this.state.otp
+        try {
+            const e = this.state.code + this.state.pno;
+            const value = await axios.get("http://localhost:8000/verify/verifycode", {
+                params: {
+                    phonenumber: e,
+                    code: this.state.otp
+                }
+            })
+            if (JSON.stringify(value.data.valid) === true) {
+                alert("This phone number was successfully verified, moving to the home page.");
+            } else {
+                alert("Oops! Wrong OTP.");
             }
-        })
-            .then(data =>
-                // valid = true
-                {
-                    if(data.valid === true)
-                        alert("This phone number was successfully verified, moving to the home page.");
-                    else
-                        alert("Oops! Wrong OTP!");
-                }// this.tohome()
-            )
-            .catch(err =>
-                // valid = false
-                alert("Oops! Wrong OTP.")
-            );
+        } catch (error) {
+            alert("Oops! Wrong OTP.");
+        }
+
+
+
+
     }
     tohome = () => {
         history.push('/');
@@ -124,24 +118,19 @@ export default class App extends React.Component {
         }
     }
 
+
+
     render() {
         return (
-            <div
-            // style={{
-            //     flex: 1,
-            //     display: 'flex',
-            //     alignItems: 'center',
-            //     justifyContent: 'center',
-            //     backgroundColor: 'rgba(160, 160, 160, 0.2)',
-            //     height: '100vh'
-            // }}
-            >
+            <div>
                 <h1 className="title" style={{ margin: 20 }}>Sign In</h1>
                 <Paper elevation={4} style={{ padding: 20, width: 300, marginBottom: 60 }}>
                     {
                         !this.state.otpShow ?
                             <h3 style={{ marginLeft: 10, color: '#9f9f9f' }}>Verification</h3> :
-                            <IconButton onClick={() => { this.setState({ otpShow: false, otp: '', seconds: 30, time: this.secondsToTime(30) }); }} size="small">
+                            <IconButton disabled={this.state.time.s > 0}
+                                onClick={() => { this.setState({ otpShow: false, otp: '', seconds: 60, time: this.secondsToTime(60) }); }}
+                                size="small">
                                 <ArrowBackIcon />
                             </IconButton>
                     }
@@ -191,7 +180,13 @@ export default class App extends React.Component {
                                             textTransform: 'none'
                                         }}
                                         color="primary"
-                                        onClick={() => this._getCode()}>
+                                        onClick={() => {
+                                            this._getCode();
+                                            this.setState({seconds: 60, time:this.secondsToTime(60)});
+                                            this.startTimer();
+                                        }
+                                    } 
+                                    >
                                         Resend
                                     </Button>
                                     <div style={{ marginLeft: 5 }}>
@@ -212,7 +207,6 @@ export default class App extends React.Component {
                                 }}
                                 onClick={() => {
                                     if (this.state.otpShow) {
-                                        // this.startTimer();
                                         this._verifyCode();
                                     } else {
                                         this._getCode();
@@ -225,11 +219,9 @@ export default class App extends React.Component {
                         </div>
                         {
                             !this.state.otpShow ?
-                                <p>By tapping Verify an SMS may be sent. Message & data rates may apply.</p> :
+                                <p>By tapping Verify an SMS may be sent.</p> :
                                 null
                         }
-
-
 
                     </div>
                 </Paper>
