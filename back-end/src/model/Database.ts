@@ -19,7 +19,13 @@ export class Database {
         this.database.on("error", () => {
             console.log("Error connecting to database");
         });
-    }
+	}
+
+	async drop() {
+		if (this.database) {
+			await this.database.dropDatabase();
+		}
+	}
 
     disconnect() {
         if (!this.database) {

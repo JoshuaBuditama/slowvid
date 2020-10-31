@@ -5,8 +5,10 @@
   "main": "build/App.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/App.js",
-    "dev": "npx nodemon"
+    "start": "node build/src/App.js",
+    "dev": "npx nodemon",
+    "test": "jest",
+    "keygen": "node build/scripts/keygen.js"
   },
   "repository": {
     "type": "git",
@@ -22,17 +24,33 @@
   "author": "Jake Brown-Beeby, Joshua Buditama, Craig Keogh, Chandaro Mey, Tait Nguyen, Kung Tsan Pang, Harkaranveer Singh",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-flow": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/bcrypt": "^3.0.0",
+    "@types/cors": "^2.8.8",
     "@types/express": "^4.17.8",
+    "@types/jest": "^26.0.14",
     "@types/mongodb": "^3.5.27",
     "@types/mongoose": "^5.7.36",
     "axios": "^0.20.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "@types/passport": "^1.0.4",
+    "@types/passport-jwt": "^3.0.3",
+    "babel-jest": "^26.5.2",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
+    "jest": "^26.5.2",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.6",
     "nodemon": "^2.0.4",
     "twilio": "^3.49.4",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "typescript": "^4.0.2"
   }
 }

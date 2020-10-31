@@ -1,30 +1,42 @@
 import express from 'express';
-// import { Database } from './Model/Database'
-// import { UserModel} from './Model/User'
+import https from 'https';
+import { Database } from './model/Database'
+import { router } from './routes/Router';
+import * as PassportConfig from './controllers/PassportConfig';
+import * as Conf from './Conf';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import passport from 'passport';
 
-// // Create a new express application instance
-// const app: express.Application = express();
+// Create a new express application instance
+const app: express.Application = express();
 
-// let db = new Database()
-// db.connect("mongodb://localhost:27017/slowvid");
-// UserModel.create({userId: "HASH_ID_TEST"});
+app.use(passport.initialize());
+PassportConfig.setupPassport(passport);
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
-// });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors()); // cors is needed to allow http (axios) connection
 
-// app.listen(3000, function () {
-//   console.log('Example app listening on port 3000!');
-// });
+let db = new Database()
+db.connect("mongodb://localhost:27017/slowvid");
 
-// process.on('exit', function () {
-//   db.disconnect();
-// });
+app.use('/api', router);
 
-require('dotenv').config();
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
 
-const app = require('../src/app.js');
+// listens on https
+https.createServer(Conf.httpsOptions, app).listen(4000, () => {
+  console.log("Listening at https://localhost:4000");
+});
 
-app.listen(8000, () => {
-    console.log('Listening on port 8000');
-})
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+
+process.on('exit', function () {
+  db.disconnect();
+});
+
