@@ -22,8 +22,8 @@ function UploadForm(){
     setSubmitStatus(false);
     try{
       MainController.submitToken(verificationToken)
-      .then(result => {setSubmitStatus(true)})
-      .catch(err => alert("Error occurred during token submission!"));
+      .then(result => {setSubmitStatus(true); setVerificationToken('')})
+      .catch(err => {alert("Error occurred during token submission!"); setVerificationToken('');});
 		} catch (err) {
       if(err instanceof Error){
           throw err.message || "Error occurred during token submission!";
