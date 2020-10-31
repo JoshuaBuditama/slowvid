@@ -6,6 +6,7 @@ import { HCPUserModel } from '../model/HCPUser';
 import { UserModel } from '../model/User';
 import { VerificationTokenModel } from '../model/VerificationToken';
 import * as Conf from '../Conf';
+import fs from 'fs';
 
 export const register = async (req: express.Request, res: express.Response) => {
 	try {
@@ -65,13 +66,6 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 			user.closeContactFlag = true;
 			await user.save();
 
-			//creating new verification token entry in the database
-			const newToken = new VerificationTokenModel({
-				value: token
-			});
-
-			// save the new verification token
-			await newToken.save();
 			return res.status(200).json({message: "success", verificationToken: token});
 		} else {
 			return res.status(404).json("Device not found");
@@ -83,15 +77,25 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 
 export const submitToken = async (req: express.Request, res: express.Response) => {
 	try{
-		let token = await VerificationTokenModel.findOne({value: req.body.token}); //also need to check for expiry date later on
-		if(token){
+		// let token = await VerificationTokenModel.findOne({value: req.body.token}); //also need to check for expiry date later on
+		let pubkey = fs.readFileSync('certificates/backend_cert.pem');
+		let validToken = jwt.verify(req.body.token,pubkey);
+		if(validToken){
+			//creating new verification token entry in the database
+			const newToken = new VerificationTokenModel({
+				value: req.body.token
+			});
+
+			// save the new verification token
+			await newToken.save();
 			return res.status(200).json("Successful token submission!");	
 		}
 		else{
 			return res.status(404).json("Token not found!");
 		}
 	} catch (err: any) {
-		res.status(400).json("Error occurred during token creation process");
+		console.log(err);
+		res.status(400).json("Error occurred during token submission process!");
 	}
     // var verificationToken = "temp";
     // var token = WebToken.setToken(verificationToken, "placeholderHCPID"); // add placeholder string until we get HCP ID properly
