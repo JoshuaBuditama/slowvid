@@ -77,9 +77,8 @@ export const confirm = async (req: express.Request, res: express.Response) => {
 
 export const submitToken = async (req: express.Request, res: express.Response) => {
 	try{
-		// let token = await VerificationTokenModel.findOne({value: req.body.token}); //also need to check for expiry date later on
 		let pubkey = fs.readFileSync('certificates/backend_cert.pem');
-		let validToken = jwt.verify(req.body.token,pubkey);
+		let validToken = jwt.verify(req.body.token,pubkey); // check token's expiry
 		if(validToken){
 			//creating new verification token entry in the database
 			const newToken = new VerificationTokenModel({
@@ -97,23 +96,8 @@ export const submitToken = async (req: express.Request, res: express.Response) =
 		console.log(err);
 		res.status(400).json("Error occurred during token submission process!");
 	}
-    // var verificationToken = "temp";
-    // var token = WebToken.setToken(verificationToken, "placeholderHCPID"); // add placeholder string until we get HCP ID properly
-    // console.log(token); // HCP should show the token to the patient
 }
 
-// export const createToken = async (req: express.Request, res: express.Response) => {
-// 	try{
-// 		console.log("HURRAY");
-// 		console.log(req.body);
-// 		return res.status(200).json("create token success");
-// 	} catch (err: any) {
-// 		res.status(400).json("Error occurred during token creation process");
-// 	}
-//     // var verificationToken = "temp";
-//     // var token = WebToken.setToken(verificationToken, "placeholderHCPID"); // add placeholder string until we get HCP ID properly
-//     // console.log(token); // HCP should show the token to the patient
-// }
 const MainController = {
 	register,
 	login,

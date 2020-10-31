@@ -5,17 +5,6 @@ import MainController from "../controller/MainController"
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
   const [submitSuccess, setSubmitStatus] = useState(false);
-  
-  //Need to fix the validity checker
-  function validToken() {
-    // const validTokenCombination = /^[A-Z]+$/;
-    // const validTokenLength = 4;
-    // if(verificationToken.match(validTokenCombination) && verificationToken.length === validTokenLength)
-    // {
-    return true;
-    // }
-    // return false;
-  }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,17 +18,6 @@ function UploadForm(){
           throw err.message || "Error occurred during token submission!";
       }
     }
-    // if(validToken()){
-    //   //send token to backend
-    //   //if successful, display success message
-    //   // console.log(MainController.createToken());
-    //   // await MainController.submitToken();
-    //   setSubmitStatus(true);
-    // }
-    // else {
-    //   //display error pop-up message
-    //   alert("Token not found!"); //can change this to a proper message similar to the success message
-    // }
   }
 
   function handlePopUpClick(){
@@ -72,7 +50,7 @@ function UploadForm(){
                     placeholder="Please insert the token here"
                     onChange={e => setVerificationToken(e.target.value) }
                   />
-                  {!validToken() && verificationToken && <p className="help is-danger">
+                  {verificationToken && <p className="help is-danger">
                     Please insert a valid token
                   </p>}
                 </div>
@@ -103,7 +81,7 @@ function UploadForm(){
                         type="submit"
                         className="button is-link"
                         value="I consent to sharing my close contacts"
-                        disabled={!validToken()}
+                        disabled={!verificationToken}
                       />
                     </p>
                   </div>

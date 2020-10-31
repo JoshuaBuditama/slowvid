@@ -34,6 +34,7 @@ https.createServer(Conf.httpsOptions, app).listen(4000, () => {
   console.log("Listening at https://localhost:4000");
 });
 
+// used to listen on normal user requests
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
