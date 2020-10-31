@@ -1,5 +1,5 @@
 import express from 'express';
-import { Database } from '../../back-end/src/Model/Database';
+import { Database } from '../../back-end/src/model/Database';
 import bodyParser from 'body-parser';
 import { router, iorouter } from './routes/Router';
 import * as SocketServer from './controllers/SocketServer';
