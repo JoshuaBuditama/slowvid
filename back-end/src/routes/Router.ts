@@ -11,4 +11,5 @@ router.post('/register', MainController.register);
 router.post('/login', MainController.login);
 router.post('/confirm', passport.authenticate('jwt', { session: false }),
 	MainController.confirm);
-router.post('/closeContactFlag', RequestController.getCloseContactFlag);
+export const httpRouter = express.Router();
+httpRouter.post('/closeContactFlag', RequestController.getCloseContactFlag);
