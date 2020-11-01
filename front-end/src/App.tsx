@@ -42,7 +42,7 @@ function App() {
             <MainPage path="/" />
             <NotificationPage path="notifications" />
             <SignInPage path="sign-in" />
-            <UploadPage path="upload" />
+            <UploadPage path="/upload" />
             <TermOfServicePage path="TOS"/>
           </Router>
         </DeviceMock>

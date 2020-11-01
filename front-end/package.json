@@ -18,13 +18,14 @@
     "axios": "^0.20.0",
     "bulma": "^0.9.1",
     "elliptic": "^6.5.3",
+    "history": "^4.10.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "styled-components": "^5.2.0",
     "run-script-os": "^1.1.1",
     "socket.io-client": "^2.3.1",
+    "styled-components": "^5.2.0",
     "typescript": "^3.7.5"
   },
   "scripts": {

@@ -13,6 +13,9 @@ import axios from 'axios';
 import Otp from './Otp.js';
 import history from './history';
 
+
+
+
 function isNumeric(n) {
     return !isNaN(parseInt(n)) && isFinite(n);
 }
@@ -27,53 +30,48 @@ export default class App extends React.Component {
             otpShow: false,
             otp: '',
             time: {},
-            seconds: 30
+            seconds: 60,
+            showmain: false,
         };
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
     }
     _getCode = async () => {
-        this.setState({ seconds: 30, time: this.secondsToTime(30) });
-        const e = this.state.code + this.state.pno;
-        await axios.get("http://localhost:8000/verify/getcode", {
-            params: {
-                phonenumber: e,
-                channel: 'sms'
-            }
-        })
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
-
-
+        try {
+            this.setState({ seconds: 60, time: this.secondsToTime(60) });
+            const e = this.state.code + this.state.pno;
+            await axios.get("http://localhost:8000/verify/getcode", {
+                params: {
+                    phonenumber: e,
+                    channel: 'sms'
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     };
 
-    _checkResponse = (val) => {
-        if (val === "NO") {
-            alert("1.Incorrect phone number")
+    _verifyCode = async () => {
+        try {
+            const e = this.state.code + this.state.pno;
+            const value = await axios.get("http://localhost:8000/verify/verifycode", {
+                params: {
+                    phonenumber: e,
+                    code: this.state.otp
+                }
+            })
+            if (value.data.valid === true) {
+                alert("This phone number was successfully verified, moving to the home page.");
+                this.setState({ showmain: true });
+            } else {
+                alert("Oops! Wrong OTP.");
+            }
+        } catch (error) {
+            alert("time pssed");
         }
 
-    }
 
-    _verifyCode = async () => {
-        const e = this.state.code + this.state.pno;
-        await axios.get("http://localhost:8000/verify/verifycode", {
-            params: {
-                phonenumber: e,
-                code: this.state.otp
-            }
-        })
-            .then(data =>{
-                // alert("Your Your phone number has been sucessfully verified");
-                this.tohome();
-            })
-            .catch(err =>
-                // valid = false
-                alert("Oops! Wrong OTP.")
-            );
-    }
-    tohome = () => {
-        history.push('/');
     }
 
 
@@ -126,104 +124,133 @@ export default class App extends React.Component {
                     padding: 15
                 }}
             >
-                <h1 className="title" style={{ margin: 20 }}>Sign In</h1>
-                <Paper elevation={4} style={{ padding: 20, width: 300, marginBottom: 60 }}>
-                    {
-                        !this.state.otpShow ?
-                            <h3 style={{ marginLeft: 10, color: '#9f9f9f' }}>Verification</h3> :
-                            <IconButton onClick={() => { this.setState({ otpShow: false, otp: '', seconds: 30, time: this.secondsToTime(30) }); }} size="small">
-                                <ArrowBackIcon />
-                            </IconButton>
-                    }
-                    {
-                        !this.state.otpShow ?
-                            <h3>Enter your Phone Number</h3> :
-                            <h3>Enter the OTP</h3>
-                    }
-                    {
-                        this.state.otpShow ?
-                            <p>A One Time Password has been sent to your phone number for verification puposes.</p> :
-                            null
-                    }
-                    <div>
-                        {
-                            !this.state.otpShow ?
-                                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', justifyContent: 'space-around' }}>
+                {
+                    this.state.showmain ?
+                        <div
+                            style={{
+                                padding: "10px", border: "1px solid white", backgroundColor: "forestgreen", alignItems: 'center',
+                                justifyContent: 'center', height: 900,
+                            }}
+                        >
+                            <h3 className="title" style={{ margin: 20 }}>Home page</h3>
+                            <div
+                                style={{ marginTop: "20px", marginBottom: "100px" }}
+                            >
+                                <h1 className="title" style={{ margin: 20 }}>You are in safe!</h1>
 
-                                    <div style={{ alignItems: 'flex-end', justifyContent: 'center', display: 'flex', marginRight: 10, width: 60 }}>
-                                        <TextField placeholder="eg. +61" id="code" label="Code" color="secondary" value={this.state.code}
-                                            inputProps={{ maxLength: 4 }}
-                                            onChange={e => {
-                                                this.setState({ code: e.target.value });
-                                            }} />
-                                    </div>
-                                    <div>
-                                        <TextField placeholder="eg. 0412 345 678" id="phone" label="Phone" color="secondary" value={this.state.pno}
-                                            onChange={e => {
-                                                if ((e.target.value[e.target.value.length - 1] >= '0' && e.target.value[e.target.value.length - 1] <= '9') || !e.target.value) {
-                                                    this.setState({ pno: e.target.value });
-                                                }
-                                            }} />
-                                    </div>
-                                </div> :
-                                <Otp otp={this.state.otp} setOtp={val => this.setState({ otp: val })} />
-                        }
-                        {
-                            this.state.otpShow ?
-                                <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 5 }}>
-                                    Didn't receive an OTP?
-                                    <Button
-                                        variant="contained"
-                                        disabled={this.state.time.s > 0}
-                                        style={{
-                                            color: 'white',
-                                            marginLeft: 'auto',
-                                            textTransform: 'none'
-                                        }}
-                                        color="primary"
-                                        onClick={() => this._getCode()}>
-                                        Resend
-                                    </Button>
-                                    <div style={{ marginLeft: 5 }}>
-                                        {this.state.time.s}s
-                                    </div>
-                                </div> :
-                                null
-                        }
-                        <div style={{ display: 'flex', flexDirection: 'row', marginTop: 20 }}>
-                            <Button
-                                variant="contained"
-                                disabled={(this.state.pno.length !== 10) || (this.state.code === null) || !isNumeric(this.state.pno) || (this.state.otpShow && this.state.otp.length !== 6)}
-                                color="secondary"
-                                style={{
-                                    color: 'white',
-                                    marginLeft: 'auto',
-                                    textTransform: 'none'
-                                }}
-                                onClick={() => {
-                                    if (this.state.otpShow) {
-                                        // this.startTimer();
-                                        this._verifyCode();
-                                    } else {
-                                        this._getCode();
-                                        this.startTimer();
-                                        this.setState({ otpShow: true });
+                            </div>
+                            <p>
+                                This is a demo of slowvid application
+                            </p>
+
+                        </div> :
+
+
+
+                        <div>
+                            <h1 className="title" style={{ margin: 20 }}>Sign In</h1>
+                            <Paper elevation={4} style={{ padding: 20, width: 300, marginBottom: 60 }}>
+                                {
+                                    !this.state.otpShow ?
+                                        <h3 style={{ marginLeft: 10, color: '#9f9f9f' }}>Verification</h3> :
+                                        <IconButton
+                                            disabled={this.state.time.s > 0}
+                                            onClick={() => { this.setState({ otpShow: false, otp: '', seconds: 30, time: this.secondsToTime(30) }); }} size="small">
+                                            <ArrowBackIcon />
+                                        </IconButton>
+                                }
+                                {
+                                    !this.state.otpShow ?
+                                        <h3>Enter your Phone Number</h3> :
+                                        <h3>Enter the OTP</h3>
+                                }
+                                {
+                                    this.state.otpShow ?
+                                        <p>A One Time Password has been sent to your phone number for verification puposes.</p> :
+                                        null
+                                }
+                                <div>
+                                    {
+                                        !this.state.otpShow ?
+                                            <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', justifyContent: 'space-around' }}>
+
+                                                <div style={{ alignItems: 'flex-end', justifyContent: 'center', display: 'flex', marginRight: 10, width: 60 }}>
+                                                    <TextField placeholder="eg. +61" id="code" label="Code" color="secondary" value={this.state.code}
+                                                        inputProps={{ maxLength: 4 }}
+                                                        onChange={e => {
+                                                            this.setState({ code: e.target.value });
+                                                        }} />
+                                                </div>
+                                                <div>
+                                                    <TextField placeholder="eg. 0412 345 678" id="phone" label="Phone" color="secondary" value={this.state.pno}
+                                                        onChange={e => {
+                                                            if ((e.target.value[e.target.value.length - 1] >= '0' && e.target.value[e.target.value.length - 1] <= '9') || !e.target.value) {
+                                                                this.setState({ pno: e.target.value });
+                                                            }
+                                                        }} />
+                                                </div>
+                                            </div> :
+                                            <Otp otp={this.state.otp} setOtp={val => this.setState({ otp: val })} />
                                     }
-                                }}>
-                                Verify
-                            </Button>
-                        </div>
-                        {
-                            !this.state.otpShow ?
-                                <p>By tapping Verify an SMS may be sent. Message & data rates may apply.</p> :
-                                null
-                        }
+                                    {
+                                        this.state.otpShow ?
+                                            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 5 }}>
+                                                Didn't receive an OTP?
+                                    <Button
+                                                    variant="contained"
+                                                    disabled={this.state.time.s > 0}
+                                                    style={{
+                                                        color: 'white',
+                                                        marginLeft: 'auto',
+                                                        textTransform: 'none'
+                                                    }}
+                                                    color="primary"
+                                                    onClick={() => this._getCode()}>
+                                                    Resend
+                                    </Button>
+                                                <div style={{ marginLeft: 5 }}>
+                                                    {this.state.time.s}s
+                                    </div>
+                                            </div> :
+                                            null
+                                    }
+                                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: 20 }}>
+                                        <Button
+                                            variant="contained"
+                                            disabled={(this.state.pno.length !== 10) || (this.state.code === null) || !isNumeric(this.state.pno) || (this.state.otpShow && this.state.otp.length !== 6)}
+                                            color="secondary"
+                                            style={{
+                                                color: 'white',
+                                                marginLeft: 'auto',
+                                                textTransform: 'none'
+                                            }}
+                                            onClick={() => {
+                                                if (this.state.otpShow) {
+                                                    // this.startTimer();
+                                                    this._verifyCode();
+                                                } else {
+                                                    this._getCode();
+                                                    this.startTimer();
+                                                    this.setState({ otpShow: true });
+                                                }
+                                            }}>
+                                            Verify
+                                        </Button>
+                                    </div>
+                                    {
+                                        !this.state.otpShow ?
+                                            <p>By tapping Verify an SMS may be sent. Message & data rates may apply.</p> :
+                                            null
+                                    }
 
-                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
-                            <a href='TOS' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
+                                        <a href='TOS' style={{ textDecoration: 'none', fontSize: 14 }}>Terms of service</a>
+                                    </div>
+                                </div>
+                            </Paper>
                         </div>
-                    </div>
-                </Paper>
+
+                }
             </div>
         );
     }

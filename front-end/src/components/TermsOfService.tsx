@@ -27,7 +27,7 @@ function TOS() {
                     </ol>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
                         <a href='sign-in' style={{ textDecoration: 'none', fontSize: 22 }}>
-                            <u>back</u>
+                            <u>Understand</u>
                             </a>
 
                 </div>
