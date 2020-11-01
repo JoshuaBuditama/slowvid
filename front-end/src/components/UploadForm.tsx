@@ -5,7 +5,7 @@ import MainController from "../controller/MainController"
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
   const [submitSuccess, setSubmitStatus] = useState(false);
-  const invalidCharacters = /[;'":()[\]\\\/%$#@!?=+]/;
+  const invalidCharacters = /[;'":()[\]\\/%$#@!?=+]/;
 
   function validToken(){
     if(verificationToken.match(invalidCharacters) || !verificationToken)
