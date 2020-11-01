@@ -8,12 +8,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 
-
-
 // Create a new express application instance
 const app: express.Application = express();
-
-app.use('/http', httpRouter);
 
 app.use(passport.initialize());
 PassportConfig.setupPassport(passport);
@@ -21,6 +17,7 @@ PassportConfig.setupPassport(passport);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // cors is needed to allow http (axios) connection
+app.use('/http', httpRouter);
 
 let db = new Database()
 db.connect("mongodb://localhost:27017/slowvid");
