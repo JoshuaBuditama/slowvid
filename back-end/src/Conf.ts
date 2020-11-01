@@ -28,3 +28,6 @@ export const signalStrengthThreshold: number = 1.0;
 // duration threshold. The minimum proximity duration required before an
 // encounter can be identified as a close contact (if other conditions are met)
 export const durationThresholdinMs: number = 5000;
+// allowed incorrect password attempts by a health care professional (HCP)
+// before the account is locked
+export const allowedIncorrectPasswordAttemptsHCP: number = 5;

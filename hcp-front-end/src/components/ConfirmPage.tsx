@@ -20,8 +20,12 @@ export const ConfirmPage: React.FunctionComponent<ConfirmPageProps> = (props) =>
 		event.preventDefault();
 		setValidForm(false);
 		try {
+<<<<<<< HEAD
 			const result = await MainController.confirm(deviceId)
 			setSignedJWT(result.data.verificationToken);
+=======
+			await MainController.confirm(deviceId);
+>>>>>>> master
 			alert("Confirm successful");
 		} catch (e: any) {
 			alert(e);
