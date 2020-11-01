@@ -87,15 +87,10 @@ export const login = async (req: express.Request, res: express.Response) => {
  */
 export const confirm = async (req: express.Request, res: express.Response) => {
 	try {
-<<<<<<< HEAD
-		let user = await UserModel.findOne({ deviceId: req.body.deviceId });
-		let hcp = await HCPUserModel.findOne({ hcpId: req.body.hcpId });
-		let token = WebToken.setToken(req.body.deviceId, req.body.hcpId); // creating the JWT token
-		if (user && hcp) {
-=======
-		let user = await UserModel.findOne({ deviceId: req.body.deviceId }).exec();
-		if (user) {
->>>>>>> master
+				let user = await UserModel.findOne({ deviceId: req.body.deviceId });
+				let hcp = await HCPUserModel.findOne({ hcpId: req.body.hcpId });
+				let token = WebToken.setToken(req.body.deviceId, req.body.hcpId); // creating the JWT token
+				if (user && hcp) {
 			user.closeContactFlag = true;
 			await user.save();
 
