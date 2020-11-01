@@ -24,6 +24,7 @@ export const register = async (req: express.Request, res: express.Response) => {
 				password: req.body.password,
 				locked: true,
 				incorrectPasswordAttempts: 0,
+				hcpID: req.body.emailAddress
 			});
 			const salt = await bcrypt.genSalt(10);
 			const hash = await bcrypt.hash(newUser.password, salt);
@@ -88,13 +89,12 @@ export const login = async (req: express.Request, res: express.Response) => {
 export const confirm = async (req: express.Request, res: express.Response) => {
 	try {
 				let user = await UserModel.findOne({ deviceId: req.body.deviceId });
-				let hcp = await HCPUserModel.findOne({ hcpId: req.body.hcpId });
 				let token = WebToken.setToken(req.body.deviceId, req.body.hcpId); // creating the JWT token
-				if (user && hcp) {
-			user.closeContactFlag = true;
-			await user.save();
+				if (user) {
+					user.closeContactFlag = true;
+					await user.save();
 
-			return res.status(200).json({message: "success", verificationToken: token});
+					return res.status(200).json({message: "success", verificationToken: token});
 		} else {
 			return res.status(404).json("Device not found");
 		}

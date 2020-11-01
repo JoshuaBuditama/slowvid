@@ -24,6 +24,7 @@ export interface IHCPUser {
 	password: string;
 	locked: boolean;
 	incorrectPasswordAttempts: number;
+	hcpID: string;
 }
 
 export interface IHCPUserDocument extends IHCPUser, mongoose.Document { };
