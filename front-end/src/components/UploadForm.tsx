@@ -5,18 +5,32 @@ import MainController from "../controller/MainController"
 function UploadForm(){
   const [verificationToken, setVerificationToken] = useState("");
   const [submitSuccess, setSubmitStatus] = useState(false);
+  const invalidCharacters = /[;'":()[\]\\\/%$#@!?=+]/;
 
+  function validToken(){
+    if(verificationToken.match(invalidCharacters) || !verificationToken)
+    {
+      return false;
+    }
+    return true;
+
+  }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitStatus(false);
-    try{
-      MainController.submitToken(verificationToken)
-      .then(result => {setSubmitStatus(true); setVerificationToken('')})
-      .catch(err => {alert("Error occurred during token submission!"); setVerificationToken('');});
-		} catch (err) {
-      if(err instanceof Error){
-          throw err.message || "Error occurred during token submission!";
+    if(validToken()){
+      try{
+        MainController.submitToken(verificationToken)
+        .then(result => {setSubmitStatus(true); setVerificationToken('')})
+        .catch(err => {alert("Error occurred during token submission!"); setVerificationToken('');});
+      } catch (err) {
+        if(err instanceof Error){
+            throw err.message || "Error occurred during token submission!";
+        }
       }
+    }
+    else {
+      alert("Please insert a valid token or generate a new one.")
     }
   }
 
@@ -50,6 +64,9 @@ function UploadForm(){
                     placeholder="Please insert the token here"
                     onChange={e => setVerificationToken(e.target.value) }
                   />
+                  {!validToken() && verificationToken && <p className="help is-danger">
+                    Please insert a valid token
+                  </p>}
                 </div>
               </div>
         
@@ -78,7 +95,7 @@ function UploadForm(){
                         type="submit"
                         className="button is-link"
                         value="I consent to sharing my close contacts"
-                        disabled={!verificationToken}
+                        disabled={!validToken()}
                       />
                     </p>
                   </div>
