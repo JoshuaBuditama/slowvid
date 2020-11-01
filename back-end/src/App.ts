@@ -1,15 +1,19 @@
 import express from 'express';
 import https from 'https';
 import { Database } from './model/Database'
-import { router } from './routes/Router';
+import { router, httpRouter } from './routes/Router';
 import * as PassportConfig from './controllers/PassportConfig';
 import * as Conf from './Conf';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 
+
+
 // Create a new express application instance
 const app: express.Application = express();
+
+app.use('/http', httpRouter);
 
 app.use(passport.initialize());
 PassportConfig.setupPassport(passport);
