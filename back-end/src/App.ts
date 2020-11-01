@@ -1,7 +1,7 @@
 import express from 'express';
 import https from 'https';
 import { Database } from './model/Database'
-import { router } from './routes/Router';
+import { router, httpRouter } from './routes/Router';
 import * as PassportConfig from './controllers/PassportConfig';
 import * as Conf from './Conf';
 import cors from 'cors';
@@ -17,6 +17,7 @@ PassportConfig.setupPassport(passport);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // cors is needed to allow http (axios) connection
+app.use('/http', httpRouter);
 
 let db = new Database()
 db.connect("mongodb://localhost:27017/slowvid");

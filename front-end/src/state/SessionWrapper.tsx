@@ -4,21 +4,26 @@ import * as Conf from '../Conf';
 import * as EphemeralMgr from '../security_privacy/EphemeralMgr';
 import * as LocalStorage from './LocalStorage';
 import { IBluetoothMsgWithSignalStrength } from '../../../bluetooth-back-end/src/model/BluetoothMsgModel';
+import axios, {AxiosInstance} from 'axios';
+//import {setCommentRange } from "typescript";
 
 interface SessionProps {
   consentProvided: boolean;
   setConsentProvided: React.Dispatch<React.SetStateAction<boolean | null>> | null;
   mockServices: SocketIOClient.Socket;
+  closeContactFlag: boolean;
 }
 
 interface SessionWrapperProps {
   children: React.ReactNode;
 }
 
-const AppContext = createContext({ mockServices: null, setConsentProvided: null, consentProvided: null} as SessionProps);
+const AppContext = createContext({ mockServices: null, setConsentProvided: null, consentProvided: null,
+  closeContactFlag: false} as SessionProps);
 
 export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (props : SessionWrapperProps) => {
   const [consentProvided, setConsentProvided] = useState(localStorage.getItem("consentProvided")==='true');
+  const [closeContactFlag, setCloseContactFlag] = useState(false);
   // called twice due to https://reactjs.org/docs/strict-mode.html
   const [mockServices, ] = useState(io(Conf.mockServicesAddr, {
     reconnection: Conf.bluetoothReconnection,
@@ -52,6 +57,12 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
     }
   });
 
+  const http: AxiosInstance = axios.create({baseURL: Conf.backendAddr});
+  setInterval(async () => {
+    const res = await http.post<boolean>('/closeContactFlag', {deviceId: Conf.deviceId});
+    setCloseContactFlag(res.data);
+  }, Conf.checkCloseContactFlagPeriodMilliseconds);
+
   useEffect(() => {
     localStorage.setItem("consentProvided", consentProvided===true ? 'true' : 'false');
   }, [consentProvided]);
@@ -63,6 +74,7 @@ export const SessionWrapper:React.FunctionComponent<SessionWrapperProps> = (prop
           consentProvided: consentProvided,
           setConsentProvided: setConsentProvided,
           mockServices: mockServices,
+          closeContactFlag: closeContactFlag,
         }}
       >
         {props.children}
